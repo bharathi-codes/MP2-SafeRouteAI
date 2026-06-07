@@ -1,0 +1,521 @@
+location,latitude,longitude,accident_count,peak_hour_start,peak_hour_end,road_type,common_cause,weather_risk,fatality_rate
+Chennai OMR IT Corridor,13.0569,80.2425,45,21,2,highway,overspeeding,rain,0.42
+Salem NH44 Bypass,11.6643,78.146,38,22,3,highway,drunk_driving,fog,0.38
+Namakkal NH44 KM234,11.2213,78.1652,28,20,1,highway,overtaking,rain,0.31
+Coimbatore Avinashi Road,11.0168,76.9558,32,19,23,urban,signal_jumping,normal,0.25
+Madurai Bypass NH85,9.9252,78.1198,41,23,4,highway,fatigue,fog,0.44
+Tiruchirappalli NH45,10.7905,78.7047,29,21,2,highway,overspeeding,rain,0.33
+Vellore NH48,12.9165,79.1325,35,20,3,highway,overtaking,fog,0.39
+Tirunelveli NH44,8.7139,77.7567,22,22,2,highway,overspeeding,rain,0.28
+Erode NH544 Bypass,11.341,77.7172,33,21,3,highway,overtaking,rain,0.34
+Karur NH44 Junction,10.9601,78.0766,26,20,2,highway,overspeeding,fog,0.29
+Dharmapuri NH44,12.1211,78.1582,31,22,4,highway,drunk_driving,fog,0.36
+Krishnagiri NH44,12.5186,78.2138,37,21,3,highway,overspeeding,fog,0.41
+Ranipet NH48 Stretch,12.9321,79.3333,24,19,1,highway,overtaking,rain,0.27
+Villupuram NH45,11.9401,79.4861,30,20,2,highway,drunk_driving,rain,0.32
+Cuddalore ECR Coastal Road,11.748,79.7714,27,22,3,urban,overspeeding,rain,0.3
+Thanjavur NH45C,10.787,79.1378,25,21,2,highway,fatigue,normal,0.26
+Dindigul NH44 Flyover,10.3624,77.9695,34,23,4,highway,overspeeding,fog,0.37
+Virudhunagar NH44,9.5681,77.9624,23,20,1,highway,overtaking,rain,0.25
+Thoothukudi Harbour Road,8.7642,78.1348,19,18,22,urban,signal_jumping,normal,0.22
+Kanyakumari NH44 End,8.0883,77.5385,18,21,2,highway,fatigue,rain,0.24
+Nilgiris Coonoor Ghat,11.353,76.7959,36,6,10,rural,overspeeding,fog,0.43
+Tiruppur NH544,11.1085,77.3411,29,20,2,highway,overtaking,normal,0.3
+Sivagangai NH226,10.0348,78.4822,20,22,3,highway,drunk_driving,normal,0.23
+Ramanathapuram NH87,9.3639,78.8395,21,23,4,highway,fatigue,normal,0.26
+Pudukkottai NH226,10.3833,78.8001,22,21,2,highway,overspeeding,rain,0.25
+Perambalur NH45,11.232,78.88,27,20,3,highway,overtaking,fog,0.31
+Ariyalur NH45 Stretch,11.14,79.0755,24,22,3,highway,drunk_driving,fog,0.28
+Nagapattinam NH45A,10.7657,79.8424,20,19,1,urban,signal_jumping,rain,0.23
+Tiruvarur NH45A,10.7713,79.6345,18,20,2,urban,overspeeding,rain,0.21
+Mayiladuthurai NH45A,11.1018,79.6527,19,21,2,highway,fatigue,rain,0.22
+Kallakurichi NH79,11.7392,78.9615,26,22,4,highway,drunk_driving,fog,0.3
+Tirupattur NH48,12.488,78.573,28,20,3,highway,overspeeding,fog,0.32
+Chengalpattu GST Road,12.6819,80.0275,39,19,23,highway,signal_jumping,rain,0.4
+Kancheepuram NH48,12.8342,79.7036,31,20,2,highway,overtaking,normal,0.33
+Thiruvallur NH205,13.1431,79.909,33,21,3,highway,overspeeding,rain,0.35
+Tiruvannamalai NH66,12.2253,79.0747,30,22,4,highway,drunk_driving,fog,0.34
+Vandavasi SH4,12.5005,79.2328,25,20,1,rural,overtaking,fog,0.29
+Chennai ECR Beach Road,12.9855,80.2554,40,17,21,urban,signal_jumping,rain,0.38
+Chennai Tambaram GST Road,12.9249,80.1,44,18,22,urban,overspeeding,rain,0.41
+Hosur NH44 Border,12.7409,77.8253,36,21,3,highway,overspeeding,fog,0.39
+Theni NH85 Ghat,10.0104,77.4769,32,7,11,rural,overspeeding,fog,0.37
+Ooty Mettupalayam Ghat,11.406,76.74,34,8,12,rural,overspeeding,fog,0.42
+Kumbakonam NH36,10.9617,79.3881,21,20,2,urban,signal_jumping,normal,0.24
+Ambur NH48 Leather Town,12.7913,78.7169,24,21,3,highway,overtaking,fog,0.28
+Arakkonam NH48 Junction,13.0841,79.6697,22,20,2,highway,overspeeding,rain,0.26
+Attur NH79 Salem Dist,11.5961,78.601,20,22,3,rural,drunk_driving,fog,0.25
+Paramakudi NH87,9.5443,78.5899,18,23,4,highway,fatigue,normal,0.22
+Sivakasi NH44 Cracker Town,9.4533,77.7983,25,20,2,highway,overspeeding,rain,0.29
+Pollachi NH209,10.6609,77.0087,27,21,3,rural,overtaking,fog,0.31
+Srirangam NH45 Bridge,10.856,78.6872,19,18,22,urban,signal_jumping,normal,0.22
+Palani Ghat Road,10.4505,77.5164,30,7,11,rural,overspeeding,fog,0.35
+Kodaikanal Ghat NH244,10.2381,77.4892,28,8,12,rural,overspeeding,fog,0.33
+Manamadurai NH87 Junction,9.677,78.4715,17,22,3,highway,fatigue,normal,0.21
+Kovilpatti NH44,9.1722,77.8691,21,20,2,highway,overtaking,rain,0.25
+Sankarankovil SH40,9.1667,77.5333,16,21,3,rural,drunk_driving,normal,0.2
+Tenkasi NH744,8.96,77.315,19,22,4,highway,overspeeding,rain,0.24
+Nagercoil NH66,8.1833,77.4119,23,19,1,urban,signal_jumping,rain,0.27
+Marthandam NH744,8.3072,77.2228,15,20,2,rural,fatigue,rain,0.19
+Tiruttani NH205 Temple Road,13.1768,79.6111,20,22,2,highway,overspeeding,fog,0.24
+Gudiyatham NH48,12.9444,78.8709,22,21,3,highway,overtaking,fog,0.27
+Tindivanam NH45,12.2361,79.656,26,20,2,highway,drunk_driving,rain,0.3
+Ulundurpet NH45,11.75,79.3167,21,22,3,highway,fatigue,rain,0.26
+Jayankondam SH22,11.0667,79.35,16,20,2,rural,overtaking,normal,0.2
+Mannargudi NH45A,10.67,79.45,18,19,1,urban,signal_jumping,rain,0.22
+Pattukkottai SH64,10.42,79.32,15,21,2,rural,overspeeding,normal,0.19
+Devakottai SH36,10.15,78.8167,14,22,3,rural,drunk_driving,normal,0.18
+Aranthangi NH226,10.1667,79.0,17,20,2,highway,fatigue,rain,0.21
+Kulithalai NH45,10.9333,78.4167,19,21,3,highway,overspeeding,fog,0.24
+Musiri SH45,10.95,78.44,16,20,2,rural,overtaking,normal,0.2
+Lalgudi NH45,10.87,78.81,18,22,3,rural,drunk_driving,fog,0.23
+Manapparai NH45B,10.61,78.42,20,21,2,highway,overspeeding,rain,0.25
+Natham SH72,10.2167,78.2,15,22,3,rural,fatigue,normal,0.19
+Thuraiyur SH45,11.15,78.6,17,20,2,rural,overtaking,fog,0.21
+Aruppukkottai NH44,9.5167,78.1,20,21,3,highway,overspeeding,rain,0.25
+Sattur NH44,9.35,77.9167,18,22,4,highway,drunk_driving,rain,0.23
+Srivilliputhur NH85,9.5128,77.634,22,20,2,highway,overtaking,fog,0.27
+Rajapalayam NH744,9.4532,77.5544,24,21,3,highway,overspeeding,rain,0.29
+Sankaridrug NH44,11.4833,78.1833,19,22,3,highway,fatigue,fog,0.24
+Edappadi SH79,11.5833,77.8167,17,20,2,rural,overtaking,normal,0.21
+Mettur Dam Road,11.7833,77.8,21,8,12,rural,overspeeding,fog,0.26
+Yercaud Ghat Road,11.775,78.2083,26,7,11,rural,overspeeding,fog,0.32
+Pennagaram NH44,12.1333,77.8833,18,22,3,highway,drunk_driving,fog,0.23
+Palacode SH79,12.0167,78.0667,15,21,2,rural,overtaking,normal,0.19
+Harur SH179,12.05,78.4833,16,20,3,rural,drunk_driving,fog,0.21
+Uthangarai NH77,12.25,78.3833,14,22,2,rural,fatigue,fog,0.18
+Pochampalli SH6,12.3667,78.3833,13,21,3,rural,overspeeding,normal,0.17
+Gingee NH66,12.25,79.4167,20,20,2,highway,overtaking,rain,0.25
+Chidambaram NH45A,11.3992,79.6937,22,19,1,urban,signal_jumping,rain,0.26
+Sirkazhi NH45A,11.2333,79.7333,16,20,2,rural,fatigue,rain,0.2
+Vedaranyam Coastal Road,10.37,79.85,14,21,3,rural,overspeeding,normal,0.18
+Karaikal NH45A,10.9254,79.838,19,22,2,urban,signal_jumping,rain,0.24
+Thiruvarur SH65,10.77,79.64,15,20,2,rural,overtaking,rain,0.19
+Valangaiman SH23,10.8833,79.3833,13,21,3,rural,fatigue,normal,0.17
+Kudavasal SH64,10.65,79.5,12,20,2,rural,drunk_driving,rain,0.16
+Thirukuvalai NH45A,10.5167,79.6833,14,22,3,rural,overspeeding,rain,0.18
+Kollidam Bridge NH45,11.25,79.4167,23,21,2,highway,overspeeding,rain,0.28
+Jayamkondam NH45C,11.05,79.3667,16,20,3,rural,overtaking,normal,0.2
+Sendurai NH36,11.3,79.15,15,22,2,rural,drunk_driving,fog,0.19
+Udayarpalayam SH68,11.25,79.3167,14,21,3,rural,fatigue,normal,0.18
+Bhuvanagiri NH36,11.4333,79.6333,17,20,2,highway,overspeeding,rain,0.22
+Panruti NH45A,11.77,79.55,21,22,3,highway,overtaking,rain,0.26
+Tittagudi SH5,11.6667,79.1167,15,20,2,rural,drunk_driving,fog,0.19
+Kattumannarkoil SH22,11.2825,79.5403,13,21,3,rural,fatigue,normal,0.17
+Ariyalur SH27 Bypass,11.1345,79.0765,24,18,22,highway,overspeeding,rain,0.18
+Jayankondam Cross Road,11.2654,79.3456,22,20,2,highway,fatigue,fog,0.3
+Sendurai Village Junction,11.2543,79.1876,15,7,10,rural,signal_jumping,rain,0.15
+Thirumanur Highway,10.9876,79.1234,12,17,20,rural,overtaking,normal,0.1
+Meensurutti NH81 Stretch,11.2345,79.4567,34,18,22,highway,overspeeding,normal,0.25
+Ariyalur Cement Factory Route,11.1555,79.0888,28,6,9,urban,overtaking,fog,0.22
+Keezhapalur River Bridge,11.0021,79.0522,19,19,23,highway,fatigue,rain,0.28
+T-Palur Village Intersection,11.0833,79.1211,14,8,11,rural,drunk_driving,normal,0.14
+Udayarpalayam Rural Route,11.1899,79.2844,16,18,21,rural,overspeeding,fog,0.17
+Andimadam Junction,11.3211,79.3788,21,7,10,urban,signal_jumping,normal,0.12
+Guduvancheri GST Road,12.8456,80.0543,48,7,11,highway,fatigue,normal,0.2
+Mamallapuram ECR Curve,12.6234,80.1945,30,22,2,highway,drunk_driving,fog,0.35
+Kelambakkam Vandalur Road,12.8056,80.1987,38,18,21,highway,signal_jumping,rain,0.15
+Padur OMR Stretch,12.8123,80.2234,45,19,23,urban,overspeeding,normal,0.18
+Sadras Coastal Highway,12.5211,80.1555,25,20,1,highway,fatigue,fog,0.28
+Tambaram Mudichur Route,12.9122,80.0811,42,8,11,urban,overtaking,normal,0.16
+Singaperumalkoil Bypass,12.7644,80.0033,36,17,20,highway,overspeeding,rain,0.22
+Melmaruvathur Pilgrim Stretch,12.3988,79.8322,44,21,3,highway,fatigue,normal,0.25
+Cheyyur ECR Link Road,12.3511,79.9922,18,19,23,rural,drunk_driving,fog,0.3
+Thiruporur Junction,12.7233,80.1933,29,7,10,urban,signal_jumping,normal,0.14
+Kathipara Flyover Exit,13.0134,80.2012,50,8,12,urban,overspeeding,normal,0.15
+Koyambedu Interchange,13.0732,80.1943,47,17,21,urban,signal_jumping,rain,0.12
+Anna Arch Junction,13.0756,80.2187,39,18,22,urban,overtaking,normal,0.1
+Sholinganallur IT Corridor,12.9012,80.2276,42,19,23,urban,overspeeding,fog,0.14
+Napier Bridge Approach,13.0644,80.2822,35,21,2,urban,fatigue,rain,0.18
+Ambattur CTH Road,13.1123,80.1567,45,8,11,urban,signal_jumping,normal,0.12
+Padi Bridge Intersection,13.0988,80.1877,38,18,21,urban,overspeeding,normal,0.14
+Maduravoyal Bypass Exit,13.0655,80.1644,48,22,4,highway,fatigue,fog,0.22
+Broadway Bus Terminus Zone,13.0877,80.2866,33,17,20,urban,signal_jumping,normal,0.11
+Guindy Kathipara Junction,13.0111,80.2033,49,8,11,urban,overtaking,rain,0.15
+ICF New Avadi Road,13.1011,80.2055,27,18,22,urban,overspeeding,normal,0.13
+Valluvarkottam Intersection,13.0555,80.2355,34,17,20,urban,signal_jumping,normal,0.12
+Kodambakkam Vadapalani Rd,13.0488,80.2111,41,19,23,urban,overtaking,rain,0.16
+Rippon Buildings Spot,13.0811,80.2755,22,8,11,urban,signal_jumping,normal,0.1
+Sterling Road Curve,13.0655,80.2422,25,20,2,urban,drunk_driving,fog,0.2
+DMS Gemini Flyover,13.0455,80.2488,38,18,22,urban,overspeeding,normal,0.15
+Rohini Theatre Koyambedu,13.0711,80.1988,46,22,3,urban,fatigue,rain,0.18
+High Court Parrys Corner,13.0888,80.2888,29,17,21,urban,signal_jumping,normal,0.11
+Pallikaranai Bridge Velachery,12.9355,80.2155,37,19,23,urban,overtaking,fog,0.19
+Navalur OMR Junction,12.8455,80.2255,43,8,11,urban,overspeeding,normal,0.14
+Siruseri OMR IT Hub,12.8255,80.2188,40,18,22,urban,signal_jumping,rain,0.16
+Puzhal Bypass Exit,13.1555,80.2011,48,21,4,highway,fatigue,fog,0.24
+Athupalam Ukkadam Flyover,10.9765,76.9654,46,18,22,urban,signal_jumping,normal,0.16
+Pollachi Ghat Section,10.6543,76.9876,32,15,18,highway,overtaking,rain,0.25
+Valparai Hairpin Bend 9,10.3245,76.9543,28,16,19,rural,overspeeding,fog,0.4
+Chengapalli NH544 Stretch,11.1654,77.4231,49,1,5,highway,fatigue,normal,0.3
+Mettupalayam NH67 Road,11.3011,76.9388,38,19,23,highway,overspeeding,rain,0.22
+Anaikatti Ghat Road,11.1122,76.7744,24,17,20,rural,overtaking,fog,0.38
+Thudiyalur Junction,11.0655,76.9422,35,8,11,urban,signal_jumping,normal,0.14
+Madukkarai Walayar NH544,10.8911,76.8922,45,22,4,highway,fatigue,fog,0.28
+Kallar Ghat Coonoor Route,11.3322,76.8433,30,14,18,highway,overspeeding,rain,0.35
+Sulur Industrial Bypass,11.0255,77.1211,41,18,22,highway,overtaking,normal,0.2
+Semmankuppam Railway Crossing,11.6754,79.7432,25,8,11,rural,signal_jumping,normal,0.15
+Vadalur Industrial Route,11.5543,79.5532,31,20,1,highway,fatigue,fog,0.22
+Chidambaram Bypass,11.4012,79.6876,28,18,22,highway,overspeeding,rain,0.18
+Neyveli Township Road,11.6054,79.4876,19,7,10,urban,overtaking,normal,0.12
+Vepur NH45 Intersection,11.5344,79.0566,39,21,3,highway,fatigue,fog,0.25
+Ramanatham Highway Stretch,11.4422,79.0322,33,18,22,highway,overspeeding,normal,0.2
+Panruti Village Crossing,11.7744,79.5511,15,6,9,rural,overtaking,rain,0.14
+Pennadam Highway Curve,11.3855,79.1677,22,17,20,urban,signal_jumping,normal,0.16
+Kurinjipadi Rural Route,11.5622,79.5988,14,8,11,rural,drunk_driving,fog,0.18
+Bhuvanagiri Bridge Approach,11.4644,79.6455,26,19,23,highway,overspeeding,normal,0.22
+Thoppur Ghat Killer Stretch,11.9419,78.0542,50,0,4,highway,fatigue,fog,0.45
+Palacode Highway Intersection,12.3012,78.0765,22,18,21,urban,signal_jumping,normal,0.14
+Pennagaram Rural Road,12.1345,77.8976,15,6,9,rural,overspeeding,rain,0.18
+Morappur Junction,12.1654,78.3876,18,17,20,rural,overtaking,normal,0.12
+Jittandahalli NH844,12.2211,78.1122,34,19,23,highway,fatigue,fog,0.26
+Karimangalam Bypass,12.3055,78.1255,28,18,22,highway,overspeeding,normal,0.2
+Harur Village Route,12.0622,78.4911,14,7,10,rural,drunk_driving,rain,0.15
+Bommidi Intersection,12.0155,78.3611,17,8,11,urban,signal_jumping,normal,0.12
+Nallampalli NH44,12.0722,78.1344,41,22,3,highway,fatigue,fog,0.28
+Hogenakkal Ghat Road,12.1155,77.8122,25,15,19,rural,overspeeding,normal,0.35
+Sirumalai Hairpin Bend 12,10.1987,77.9987,24,16,19,rural,overspeeding,fog,0.38
+Kodaikanal Palani Ghat Bend 15,10.2543,77.5123,30,14,18,highway,overtaking,rain,0.42
+Oddanchatram Highway NH83,10.4765,77.7543,35,19,23,highway,fatigue,normal,0.2
+Batlagundu Market Road,10.1654,77.7654,20,8,11,urban,signal_jumping,normal,0.1
+Vedasandur NH Stretch,10.5344,77.9511,42,21,2,highway,overspeeding,fog,0.25
+Natham Village Intersection,10.2288,78.2311,18,7,10,rural,overtaking,normal,0.14
+Ayyalur Bypass,10.6655,77.9833,26,18,22,highway,fatigue,rain,0.18
+Palani Temple Route,10.4488,77.5255,38,6,9,urban,signal_jumping,normal,0.15
+Thandikudi Hill Road,10.3011,77.6433,16,15,18,rural,overspeeding,fog,0.35
+Kannivadi Highway Curve,10.5522,77.8611,29,19,23,highway,drunk_driving,normal,0.22
+Bhavani River Bridge Approach,11.4432,77.6876,33,18,22,highway,overspeeding,rain,0.25
+Sathyamangalam Ghat Road,11.5012,77.2435,40,21,2,highway,fatigue,fog,0.45
+Perundurai Bypass,11.2765,77.5876,38,19,23,highway,overtaking,normal,0.18
+Gobichettipalayam Highway,11.4543,77.4321,25,7,10,urban,signal_jumping,normal,0.14
+Anthiyur Rural Road,11.5833,77.5877,15,6,9,rural,drunk_driving,fog,0.15
+Chithode NH544,11.4022,77.6711,44,22,3,highway,fatigue,rain,0.28
+Chennimalai Village Route,11.1688,77.6155,14,8,11,rural,overtaking,normal,0.12
+Kodumudi Junction,11.0822,77.7811,19,17,20,urban,signal_jumping,normal,0.1
+Bhavanisagar Forest Stretch,11.4711,77.1122,22,18,22,rural,overspeeding,fog,0.26
+Kavindapadi Crossing,11.1555,77.8188,17,7,10,urban,overtaking,normal,0.14
+Kallakurichi NH44 Bypass,11.7432,78.9654,42,23,3,highway,fatigue,normal,0.28
+Sankarapuram Village Road,11.8765,78.9432,14,6,9,rural,drunk_driving,fog,0.15
+Chinnasalem Junction,11.6432,78.8765,21,17,20,urban,signal_jumping,normal,0.12
+Kalrayan Hills Ghat Bend,11.8544,78.7555,26,15,19,rural,overspeeding,fog,0.38
+Ulundurpet Roundabout,11.6876,79.2876,39,18,22,highway,overspeeding,rain,0.2
+Thiagadurgam Highway,11.7422,79.0833,28,19,23,highway,fatigue,normal,0.18
+Tirunavalur Intersection,11.7611,79.2255,18,7,10,urban,signal_jumping,rain,0.14
+Kachirayapalayam Route,11.6988,78.9511,15,8,11,rural,overtaking,fog,0.16
+Rishivandiyam Rural Road,11.8155,78.8955,12,6,9,rural,overspeeding,normal,0.1
+Thirukovilur Bypass,11.9611,79.2011,32,20,1,highway,fatigue,normal,0.22
+Sriperumbudur NH48 Stretch,12.9654,79.9432,48,22,3,highway,fatigue,fog,0.25
+Sunguvarchatram Industrial Route,12.9321,79.8765,36,19,23,highway,overtaking,normal,0.18
+Baluchetty Chatram,12.8765,79.7654,29,18,21,urban,signal_jumping,rain,0.15
+White Gate Highway,12.8432,79.7123,24,7,10,rural,overspeeding,normal,0.12
+Ponnerikarai Junction,12.8511,79.7055,38,17,20,highway,drunk_driving,fog,0.2
+Dhamal Bypass,12.8955,79.6644,31,18,22,highway,overspeeding,normal,0.18
+Uthiramerur SH118A Stretch,12.6144,79.7688,27,19,23,highway,fatigue,rain,0.16
+Cheyyar Road Crossing,12.6655,79.6588,19,8,11,rural,overtaking,normal,0.14
+Mevalurkuppam Pedestrian Zone,13.0111,79.9955,35,18,21,urban,signal_jumping,normal,0.15
+Pennalore Highway Segment,12.9811,79.9544,42,21,2,highway,fatigue,fog,0.24
+Paramathi Bypass,11.0123,77.9876,31,20,1,highway,fatigue,normal,0.22
+Aravakurichi Highway Junction,10.7654,77.9123,27,18,22,highway,overspeeding,rain,0.18
+Kulithalai River Route,10.9432,78.4123,20,6,9,rural,overtaking,fog,0.15
+Mayanur Village Crossing,10.9543,78.2432,15,17,20,rural,signal_jumping,normal,0.1
+Pallapatti Rural Road,10.7411,77.8922,12,7,10,rural,drunk_driving,normal,0.12
+Krishnarayapuram Junction,10.9455,78.2811,18,18,21,urban,overspeeding,rain,0.14
+Velayuthampalayam Bypass,10.7811,77.8522,26,19,23,highway,fatigue,normal,0.18
+Kadavur Hill Road,10.6644,78.1888,22,15,19,rural,overspeeding,fog,0.3
+Thogamalai Intersection,10.7322,78.2544,16,8,11,rural,overtaking,normal,0.12
+Karur Town NH83,10.9588,78.0811,44,21,2,highway,signal_jumping,rain,0.25
+Hosur NH48 Toll Plaza,12.7321,77.8432,46,2,6,highway,fatigue,fog,0.24
+Shoolagiri Ghat Section,12.6543,77.9876,38,21,1,highway,overspeeding,rain,0.3
+Rayakottai Rural Intersection,12.5123,78.0432,16,7,10,rural,overtaking,normal,0.15
+Bargur Highway Curve,12.5432,78.3543,26,18,22,highway,signal_jumping,normal,0.18
+Uthangarai SH Roundabout,12.2611,78.5322,32,19,23,urban,overspeeding,fog,0.2
+Kaveripattinam Bypass,12.3955,78.2111,29,20,1,highway,fatigue,normal,0.22
+Kelamangalam Village Route,12.6044,78.0866,14,6,9,rural,drunk_driving,rain,0.16
+Anchetty Ghat Road,12.4411,77.9044,24,15,18,rural,overspeeding,fog,0.35
+Denkanikottai Junction,12.5288,77.7811,19,17,20,urban,overtaking,normal,0.14
+Krishnagiri NH44 Intersection,12.5255,78.2155,42,22,3,highway,signal_jumping,rain,0.26
+Sivarakottai NH44 Stretch,9.7543,77.9876,44,1,5,highway,fatigue,normal,0.32
+Thuvariman Junction,9.9432,78.0654,35,18,22,urban,signal_jumping,rain,0.16
+Thanakkankulam Bypass,9.8765,78.0432,30,19,23,highway,overspeeding,normal,0.2
+Melur Highway Crossing,10.0432,78.3456,25,7,10,rural,overtaking,fog,0.18
+Thirumangalam SH72 Junction,9.8211,77.9855,38,20,2,highway,fatigue,normal,0.24
+Usilampatti Rural Road,9.9655,77.7922,15,6,9,rural,drunk_driving,fog,0.14
+Vadipatti Intersection,10.0811,77.9644,22,17,20,urban,signal_jumping,rain,0.15
+Alanganallur Route,10.0522,78.0455,18,8,11,rural,overspeeding,normal,0.12
+Kappalur Toll Plaza Zone,9.8355,78.0122,46,23,4,highway,fatigue,fog,0.28
+Othakadai Highway Curve,9.9611,78.1888,32,18,21,highway,overtaking,normal,0.22
+Sirkazhi SH64 Stretch,11.2345,79.7432,28,18,21,highway,overspeeding,rain,0.22
+Kuttalam Rural Road,11.0432,79.5765,14,6,9,rural,drunk_driving,fog,0.15
+Vaitheeswarankovil Pilgrim Route,11.1987,79.7123,34,20,2,highway,fatigue,normal,0.25
+Poompuhar Coastal Road,11.1432,79.8432,19,17,20,rural,overtaking,normal,0.18
+Tharangambadi Intersection,11.0255,79.8444,22,8,11,urban,signal_jumping,rain,0.14
+Sembanarkoil Village Crossing,11.0788,79.7011,12,7,10,rural,overspeeding,normal,0.1
+Manalmedu Route,11.1644,79.5955,16,18,22,rural,fatigue,fog,0.16
+Kollidam River Bridge Approach,11.2611,79.7022,26,19,23,highway,overspeeding,rain,0.2
+Mayiladuthurai Bypass,11.1055,79.6522,35,21,2,highway,drunk_driving,normal,0.22
+Porayar Coastal Junction,11.0311,79.8322,20,17,21,urban,overtaking,fog,0.15
+Velankanni Pilgrim Route,10.6765,79.8432,38,21,3,highway,fatigue,fog,0.28
+Keechankuppam Coast Road,10.7543,79.8456,22,18,22,urban,drunk_driving,rain,0.2
+Thirupoondi Junction,10.6432,79.8123,16,7,10,rural,signal_jumping,normal,0.12
+Vedaranyam Highway,10.3765,79.8432,25,19,23,highway,overspeeding,normal,0.18
+Kizhvelur Rural Intersection,10.6655,79.7811,14,8,11,rural,overtaking,fog,0.14
+Thalainayar Coastal Route,10.4522,79.7544,18,17,20,rural,fatigue,rain,0.16
+Kodiakarai Point Calimere Road,10.2888,79.8611,15,6,9,rural,overspeeding,normal,0.15
+Nagore Pilgrim Stretch,10.8144,79.8355,34,22,3,highway,fatigue,fog,0.26
+Thirumarugal Village Road,10.8411,79.7422,12,7,10,rural,overtaking,normal,0.1
+Sikkal ECR Approach,10.7455,79.7911,26,18,21,highway,signal_jumping,rain,0.18
+Kolli Hills Hairpin Bend 34,11.2654,78.3456,36,15,18,rural,overspeeding,fog,0.45
+Kolli Hills Hairpin Bend 70,11.2876,78.3543,42,16,19,rural,fatigue,rain,0.48
+Rasipuram Highway Junction,11.4543,78.1654,29,18,22,urban,signal_jumping,normal,0.15
+Tiruchengode Rural Road,11.3765,77.8987,18,6,9,rural,overtaking,normal,0.12
+Paramathi Velur NH44,11.1155,78.0022,41,21,3,highway,fatigue,fog,0.28
+Sendamangalam Intersection,11.2844,78.2388,22,17,20,urban,overspeeding,normal,0.14
+Pallipalayam Bypass,11.3522,77.7411,33,19,23,highway,signal_jumping,rain,0.2
+Kumarapalayam Highway,11.4388,77.7255,38,20,1,highway,fatigue,normal,0.24
+Puduchatram Village Route,11.3111,78.1722,15,7,10,rural,drunk_driving,fog,0.15
+Namakkal Truck Terminal Stretch,11.2144,78.1655,48,22,4,highway,fatigue,rain,0.25
+Kalhatty Ghat Bend 18,11.4654,76.6765,39,14,17,highway,overspeeding,fog,0.46
+Kalhatty Ghat Bend 36,11.4876,76.6876,45,15,18,highway,fatigue,rain,0.5
+Coonoor Ghat NH181,11.3543,76.8123,34,17,20,highway,overtaking,fog,0.35
+Gudalur Forest Stretch,11.4987,76.4987,28,21,1,rural,drunk_driving,normal,0.25
+Kotagiri Ghat Curve,11.4234,76.8765,22,16,19,highway,overspeeding,rain,0.3
+Ooty Masinagudi Shortcut,11.4422,76.6811,41,13,16,rural,fatigue,fog,0.42
+Burliar Hairpin Segment,11.3411,76.8355,35,14,18,highway,overtaking,rain,0.38
+Pykara Lake Road,11.4522,76.5944,25,18,20,rural,overspeeding,normal,0.2
+Kodanad Viewpoint Route,11.4688,76.9011,18,17,19,rural,fatigue,fog,0.22
+Manjur Ghat Descent,11.2311,76.6622,29,15,18,highway,overspeeding,rain,0.36
+Padalur NH45 Stretch,11.1654,78.8432,41,2,6,highway,fatigue,normal,0.28
+Veppanthattai Junction,11.3214,78.8321,19,18,21,urban,signal_jumping,rain,0.14
+Kunnam Rural Intersection,11.2345,79.0123,14,7,10,rural,overtaking,fog,0.16
+Alathur Highway Curve,11.1345,78.8765,26,19,23,highway,overspeeding,normal,0.18
+Perambalur Bypass Crossing,11.2311,78.8822,35,21,2,highway,fatigue,fog,0.24
+Mangalamedu Village Route,11.3155,79.0411,15,6,9,rural,drunk_driving,rain,0.15
+Poolambadi SH Stretch,11.3444,78.9688,22,17,20,highway,overtaking,normal,0.18
+Chettikulam Rural Road,11.3922,78.8355,12,8,11,rural,signal_jumping,normal,0.1
+Valikandapuram Intersection,11.2188,78.7311,18,19,23,urban,overspeeding,fog,0.15
+Arumbavur Highway Junction,11.3611,78.9122,25,18,22,highway,fatigue,rain,0.2
+Aranthangi Highway,10.1654,78.9876,28,18,22,highway,overspeeding,rain,0.22
+Viralimalai Junction,10.6012,78.5432,35,20,1,highway,fatigue,fog,0.25
+Thirumayam NH Stretch,10.2432,78.7543,31,19,23,urban,signal_jumping,normal,0.16
+Alangudi Village Road,10.3654,78.9876,15,6,9,rural,overtaking,normal,0.12
+Keeranur Bypass,10.5611,78.7822,25,17,20,highway,overspeeding,rain,0.18
+Gandarvakottai Intersection,10.5555,79.0144,19,8,11,urban,signal_jumping,normal,0.14
+Avudaiyarkoil Coastal Link,10.0522,79.0311,22,19,22,rural,fatigue,fog,0.2
+Ponnamaravathi Rural Route,10.3388,78.4855,14,7,10,rural,drunk_driving,normal,0.15
+Karambakkudi Highway Curve,10.5111,79.1322,28,21,2,highway,overspeeding,rain,0.22
+Illuppur Village Crossing,10.5188,78.6344,16,18,21,rural,overtaking,fog,0.16
+Rameswaram ECR Stretch,9.2876,79.3123,44,21,2,highway,overspeeding,fog,0.32
+Pamban Bridge Approach,9.2765,79.2012,38,18,22,highway,fatigue,rain,0.25
+Kilakarai Coastal Road,9.2345,78.7876,22,19,23,rural,drunk_driving,normal,0.18
+Paramakudi Bypass,9.5432,78.5876,30,17,20,urban,signal_jumping,normal,0.15
+Ramanathapuram ECR Potholes,9.3611,78.8322,46,20,3,highway,overspeeding,rain,0.28
+Kamuthi Highway Junction,9.4055,78.3611,25,18,21,urban,fatigue,normal,0.16
+Mudukulathur Rural Road,9.3244,78.5088,15,6,9,rural,overtaking,fog,0.14
+Tondi Coastal Curve,9.7322,79.0155,29,19,23,highway,overspeeding,normal,0.22
+Kadaladi Intersection,9.1788,78.4711,18,8,11,rural,signal_jumping,rain,0.12
+Erwadi Village Route,9.2011,78.7022,24,17,20,rural,fatigue,fog,0.18
+Walajah NH48 Stretch,12.9432,79.3543,46,1,5,highway,fatigue,normal,0.28
+Arcot Bypass,12.9012,79.3321,32,18,22,urban,overspeeding,rain,0.18
+Sholinghur Pilgrim Road,13.1123,79.4321,26,20,2,highway,drunk_driving,fog,0.24
+Nemili Village Intersection,12.9876,79.5123,14,7,10,rural,overtaking,normal,0.12
+Arakkonam Highway Crossing,13.0811,79.6622,35,17,21,urban,signal_jumping,rain,0.15
+Kaveripakkam Rural Route,12.8955,79.4611,18,6,9,rural,overspeeding,fog,0.14
+Melvisharam NH48,12.9244,79.2688,41,21,3,highway,fatigue,normal,0.25
+Timiri Junction,12.7522,79.2855,22,18,22,urban,overtaking,normal,0.16
+Kalavai Village Road,12.7788,79.4111,12,8,11,rural,drunk_driving,rain,0.1
+Ammoor Intersection,12.8111,79.3522,19,19,23,urban,signal_jumping,fog,0.12
+Omalur NH44 Junction,11.7321,78.0654,42,22,3,highway,fatigue,normal,0.26
+Mallur Highway Stretch,11.5432,78.1345,35,18,21,urban,signal_jumping,rain,0.16
+Yercaud Ghat Bend 11,11.7876,78.2012,28,15,18,rural,overspeeding,fog,0.35
+Sankari Bypass,11.4876,77.8765,30,19,23,highway,overtaking,normal,0.18
+Konganapuram Pirivu,11.5811,77.9122,25,17,20,urban,signal_jumping,rain,0.15
+Attur Highway Curve,11.5955,78.5911,38,21,2,highway,overspeeding,fog,0.22
+Edappadi Rural Road,11.5844,77.8288,16,6,9,rural,drunk_driving,normal,0.12
+Mettur Dam Approach,11.8022,77.8055,29,18,22,highway,fatigue,rain,0.2
+Valapady Intersection,11.6588,78.3811,21,7,10,urban,overtaking,normal,0.14
+Nangavalli Junction,11.7511,77.8822,18,19,23,rural,overspeeding,fog,0.16
+Kalayarkoil Village Road,9.8432,78.6321,16,6,9,rural,drunk_driving,fog,0.15
+Karaikudi Bypass,10.0654,78.7876,32,18,22,urban,overspeeding,rain,0.18
+Tirupathur Highway,10.1234,78.6012,25,19,23,highway,fatigue,normal,0.2
+Manamadurai Junction,9.7012,78.4765,29,17,20,urban,signal_jumping,normal,0.14
+Sakkandhi Melur Road,9.8711,78.4622,22,20,1,highway,overspeeding,fog,0.18
+Devakottai Rural Route,9.9455,78.8211,18,7,10,rural,overtaking,rain,0.12
+Singampunari Intersection,10.1544,78.4388,20,18,21,urban,signal_jumping,normal,0.15
+Ilayangudi Bypass,9.6322,78.6255,26,19,23,highway,fatigue,normal,0.2
+Sivagangai SH34 Stretch,9.8488,78.4811,35,21,2,highway,overspeeding,rain,0.22
+Thirupuvanam Crossing,9.8511,78.2822,24,17,20,urban,overtaking,fog,0.16
+Shengottai Ghat Road,8.9765,77.2456,33,16,19,highway,overspeeding,fog,0.38
+Courtallam Waterfall Route,8.9345,77.2765,40,15,18,urban,drunk_driving,rain,0.25
+Kadayanallur Highway,9.0765,77.3456,26,18,22,highway,fatigue,normal,0.18
+Alangulam Junction,8.8765,77.5012,22,7,10,rural,signal_jumping,normal,0.14
+Sankarankovil Bypass,9.1711,77.5322,30,19,23,highway,overspeeding,rain,0.2
+Puliyangudi Rural Road,9.1755,77.3911,15,6,9,rural,overtaking,fog,0.15
+Tenkasi NH208 Stretch,8.9544,77.3188,45,21,3,highway,fatigue,normal,0.28
+Surandai Intersection,9.0022,77.4055,20,17,20,urban,signal_jumping,rain,0.14
+Veerakeralampudur Route,8.9688,77.4511,14,8,11,rural,overspeeding,normal,0.12
+Keezhapavur Village Crossing,8.9111,77.4022,18,18,22,rural,drunk_driving,fog,0.16
+Kumbakonam SH64 Stretch,10.9543,79.3765,37,18,22,highway,overspeeding,rain,0.22
+Pattukkottai Highway,10.4321,79.3123,28,19,23,urban,signal_jumping,normal,0.16
+Orathanadu Rural Road,10.6321,79.2456,15,6,9,rural,overtaking,fog,0.14
+Thiruvaiyaru Pilgrim Route,10.8765,79.1012,25,20,1,highway,fatigue,normal,0.2
+Peravurani Intersection,10.3011,79.1622,20,17,20,urban,signal_jumping,rain,0.15
+Thanjavur Trichy NH81,10.7855,79.1311,48,22,3,highway,fatigue,fog,0.28
+Papanasam Village Route,10.9244,79.2788,18,7,10,rural,overspeeding,normal,0.12
+Adirampattinam Coastal Link,10.3322,79.3755,26,18,21,highway,overtaking,rain,0.2
+Thiruvidaimarudur Curve,11.0088,79.4511,32,19,22,urban,overspeeding,fog,0.22
+Sethubhavachatram Road,10.2611,79.3022,16,8,11,rural,drunk_driving,normal,0.14
+Kumily Ghat Section,9.6012,77.1654,39,15,19,highway,overspeeding,fog,0.42
+Bodi Highway Crossing,10.0123,77.3456,26,18,21,urban,signal_jumping,rain,0.18
+Periyakulam Bypass,10.1234,77.5432,30,19,23,highway,fatigue,normal,0.2
+Cumbum Village Road,9.7321,77.2876,16,7,10,rural,drunk_driving,fog,0.15
+Andipatti Intersection,9.9911,77.6222,24,17,20,urban,overtaking,normal,0.16
+Uthamapalayam Rural Route,9.8155,77.3211,18,6,9,rural,overspeeding,rain,0.14
+Theni NH220 Stretch,10.0144,77.4788,41,20,2,highway,fatigue,fog,0.25
+Chinnamanur Junction,9.8322,77.3855,22,18,22,urban,signal_jumping,normal,0.15
+Bodinayakkanur Ghat Road,10.0188,77.3511,34,16,19,highway,overspeeding,rain,0.35
+Megamalai Hill Route,9.7011,77.4022,28,14,17,rural,fatigue,fog,0.38
+Tiruchendur Pilgrim Route,8.4987,78.1234,43,20,2,highway,fatigue,fog,0.3
+Kovilpatti Bypass,9.1765,77.8765,35,18,22,urban,overspeeding,rain,0.22
+Vilathikulam Rural Road,9.1345,78.1654,14,6,9,rural,overtaking,normal,0.12
+Ettayapuram Intersection,9.1543,78.0012,22,17,20,rural,signal_jumping,normal,0.14
+Pudukottai NH7A Stretch,8.7611,78.0222,40,21,3,highway,fatigue,fog,0.28
+Srivaikuntam Highway,8.6355,77.9111,28,19,23,highway,overspeeding,normal,0.2
+Kayathar NH44 Corridor,8.9444,77.7288,46,22,4,highway,fatigue,rain,0.26
+Thoothukudi Port Truck Route,8.7522,78.1655,50,0,5,urban,overspeeding,fog,0.25
+Arumuganeri Coastal Road,8.5688,78.1111,26,18,22,highway,drunk_driving,normal,0.18
+Sathankulam Village Crossing,8.4411,77.9122,16,7,10,rural,overtaking,rain,0.15
+Kudamurutti NH81 Stretch,10.8432,78.6876,46,2,6,highway,fatigue,fog,0.32
+Pettavaithalai Highway,10.8765,78.4543,38,18,22,highway,overspeeding,rain,0.26
+Thuvakudi NH38 Junction,10.7654,78.8012,41,19,23,urban,signal_jumping,normal,0.2
+Manapparai Industrial Route,10.6012,78.4123,29,21,1,highway,overtaking,normal,0.18
+Maravanur NH83 Stretch,10.6911,78.5022,44,20,2,highway,fatigue,fog,0.3
+Lalgudi Rural Road,10.8755,78.8211,18,7,10,rural,drunk_driving,rain,0.15
+Musiri Intersection,10.9344,78.4488,25,17,20,urban,signal_jumping,normal,0.16
+Thuraiyur Bypass,11.1422,78.5955,32,18,22,highway,overspeeding,normal,0.2
+Srirangam Pilgrim Route,10.8588,78.6911,36,19,23,urban,fatigue,fog,0.18
+No 1 Tollgate Chokkalingapuram,10.8811,78.6822,48,22,4,highway,overspeeding,rain,0.28
+Nanguneri Ghat Road,8.4765,77.6543,33,16,19,highway,overspeeding,fog,0.35
+Valliyur NH44 Bypass,8.3765,77.6123,40,23,3,highway,fatigue,normal,0.28
+Ambasamudram Highway,8.7012,77.4543,27,18,21,urban,signal_jumping,rain,0.16
+Radhapuram Junction,8.2654,77.6765,18,7,10,rural,overtaking,normal,0.12
+Palayamkottai Urban Stretch,8.7111,77.7422,35,17,20,urban,overspeeding,fog,0.15
+Cheranmahadevi Rural Route,8.6855,77.5611,20,6,9,rural,drunk_driving,normal,0.14
+Kalakkad Village Road,8.5244,77.5488,15,8,11,rural,overtaking,rain,0.12
+Ponnakudi NH7 Crossing,8.6422,77.7355,42,20,2,highway,fatigue,fog,0.26
+Thalaiyuthu Bazzar Route,8.7888,77.7111,30,18,22,urban,signal_jumping,normal,0.18
+Kurichikulam Villakku,8.7511,77.7022,24,19,23,rural,overspeeding,fog,0.22
+Vaniyambadi NH48 Stretch,12.6841,78.6134,42,2,6,highway,fatigue,normal,0.22
+Ambur Highway Curve,12.7852,78.7183,38,23,4,highway,overspeeding,rain,0.18
+Jolarpettai Bypass,12.5634,78.5678,25,18,21,urban,signal_jumping,normal,0.14
+Natrampalli Village Road,12.5012,78.5021,15,7,10,rural,overtaking,fog,0.12
+Tirupattur Town Intersection,12.4911,78.5622,30,17,20,urban,overspeeding,normal,0.15
+Alangayam Rural Route,12.6055,78.7511,18,6,9,rural,drunk_driving,rain,0.14
+Kandili Ghat Section,12.4544,78.6088,28,15,19,highway,fatigue,fog,0.35
+Madhanur Highway Stretch,12.8622,79.0355,35,19,23,highway,overspeeding,normal,0.2
+Vengalapuram Junction,12.5188,78.5311,22,8,11,urban,signal_jumping,rain,0.16
+Pachur Village Crossing,12.4411,78.5122,14,7,10,rural,overtaking,fog,0.12
+Avinashi NH544 Stretch,11.1923,77.2734,48,1,5,highway,fatigue,normal,0.28
+Palladam Highway Junction,10.9984,77.2891,35,17,21,urban,signal_jumping,rain,0.16
+Udumalpet Ghat Route,10.5843,77.2456,22,6,10,rural,overspeeding,fog,0.32
+Kangeyam Bypass,11.0021,77.5623,19,19,23,highway,overtaking,normal,0.15
+Dharapuram Intersection,10.7311,77.5222,28,18,22,urban,overspeeding,fog,0.18
+Vellakovil Rural Road,10.9355,77.7111,16,7,10,rural,drunk_driving,normal,0.14
+Mulanur Village Crossing,10.7644,77.7188,14,8,11,rural,overtaking,rain,0.12
+Madathukulam NH83,10.5622,77.3555,42,21,2,highway,fatigue,fog,0.26
+Uthukuli Highway Curve,11.1788,77.4611,25,18,21,highway,overspeeding,normal,0.2
+Pongalur Junction,10.9611,77.4322,20,17,20,urban,signal_jumping,fog,0.15
+Red Hills GNTR Junction,13.1892,80.1983,50,20,1,highway,overspeeding,rain,0.25
+Madhavaram Interchange,13.1487,80.2314,40,18,22,highway,overtaking,normal,0.18
+Ponneri Rural Route,13.3214,80.1956,18,6,9,rural,drunk_driving,fog,0.2
+Gummidipoondi Intersection,13.4011,80.1222,28,17,21,urban,signal_jumping,rain,0.15
+Tiruttani Highway,13.1855,79.6311,35,19,23,highway,fatigue,normal,0.22
+Uthukkottai Bypass,13.3344,79.9088,25,18,22,highway,overspeeding,fog,0.18
+Janappachathram Junction,13.2322,80.1555,30,8,11,urban,signal_jumping,normal,0.16
+Poonamallee NH48,13.0488,80.1011,48,22,4,highway,fatigue,rain,0.26
+Vellavedu Bazaar,13.0711,80.0322,22,17,20,urban,overspeeding,normal,0.14
+Arambakkam NH16 Stretch,13.5411,80.0522,41,21,2,highway,overtaking,fog,0.25
+Chengam Ghat Road,12.3012,78.7983,28,21,2,highway,overspeeding,fog,0.35
+Polur Highway Crossing,12.5098,79.1234,22,17,20,urban,signal_jumping,normal,0.14
+Vandavasi Bypass,12.4987,79.6012,16,19,23,highway,overtaking,rain,0.18
+Arani Village Intersection,12.6734,79.2876,14,8,11,rural,drunk_driving,normal,0.25
+Kadagaman SH9 Stretch,12.3511,79.4322,30,18,22,highway,fatigue,fog,0.2
+Sananthal Amman Temple Route,12.2555,79.0511,18,7,10,rural,overspeeding,normal,0.15
+Vadavanakkambadi Bus Stop,12.4544,79.5288,25,19,23,urban,signal_jumping,rain,0.16
+Cheyyar Government Depot,12.6522,79.5455,35,17,21,urban,overtaking,normal,0.18
+Kalasapakkam Rural Road,12.7588,79.4011,15,6,9,rural,drunk_driving,fog,0.14
+Thandarampet Junction,12.3811,78.9622,20,8,11,rural,overspeeding,normal,0.12
+Mannargudi Highway,10.6654,79.4421,24,18,21,urban,overspeeding,rain,0.16
+Thiruthuraipoondi Coastal Route,10.5342,79.6453,19,20,2,highway,fatigue,fog,0.28
+Nannilam Rural Road,10.8765,79.6123,12,7,10,rural,overtaking,normal,0.12
+Peralam Junction,10.9432,79.6781,15,17,20,urban,signal_jumping,normal,0.1
+Valangaiman Intersection,10.8711,79.4022,20,18,22,urban,overspeeding,fog,0.14
+Needamangalam Village Crossing,10.7755,79.4111,18,6,9,rural,drunk_driving,rain,0.15
+Koothanallur Highway Curve,10.8144,79.5188,25,19,23,highway,fatigue,normal,0.18
+Muthupettai Coastal Road,10.4022,79.4855,30,21,2,highway,overspeeding,fog,0.25
+Kodavasal Rural Route,10.8788,79.4811,14,8,11,rural,overtaking,normal,0.12
+Pandaravadai MDR Junction,10.8611,79.2522,22,17,20,rural,signal_jumping,rain,0.16
+Pallikonda NH48 Stretch,12.9123,78.9456,45,23,4,highway,fatigue,normal,0.26
+Katpadi Highway Crossing,12.9876,79.1345,33,8,11,urban,signal_jumping,rain,0.14
+Gudiyattam Bypass,12.9453,78.8765,26,19,23,highway,overspeeding,normal,0.18
+KV Kuppam Village Road,12.9987,79.0321,14,6,9,rural,drunk_driving,fog,0.22
+Anaicut Intersection,12.8711,78.9822,20,18,21,rural,overtaking,normal,0.15
+Pernambut Ghat Route,12.7855,78.7111,28,15,18,highway,overspeeding,fog,0.35
+Vellore Ussoor Road,12.9044,79.0588,38,17,20,urban,signal_jumping,rain,0.18
+Kaniyambadi Highway,12.7922,79.1355,24,19,22,highway,fatigue,normal,0.2
+Sathuvachari NH Route,12.9388,79.1611,40,21,3,highway,overspeeding,fog,0.25
+Bagayam Rural Crossing,12.8711,79.1222,18,7,10,rural,overtaking,normal,0.14
+Vikravandi NH45 Stretch,12.0345,79.5432,49,1,6,highway,fatigue,normal,0.3
+Tindivanam Roundabout,12.2345,79.6543,41,18,22,highway,overspeeding,rain,0.2
+Gingee Bypass,12.2543,79.4123,23,19,23,urban,overtaking,normal,0.15
+Marakkanam Coastal Road,12.1987,79.9456,18,20,1,rural,drunk_driving,fog,0.25
+Vanur ECR Intersection,12.0211,79.7322,30,17,21,highway,signal_jumping,normal,0.18
+Melmalayanur Highway Curve,12.3555,79.0711,26,18,22,highway,overspeeding,rain,0.22
+Kandamangalam Village Road,11.9144,79.6688,15,7,10,rural,overtaking,fog,0.14
+Vikkiravandi Kumbakonam NH,11.9822,79.5355,44,22,3,highway,fatigue,normal,0.28
+Thiruvennainallur Route,11.8788,79.2811,20,19,23,rural,overspeeding,rain,0.16
+Mailam Pilgrim Road,12.1411,79.6122,35,8,11,highway,drunk_driving,fog,0.25
+Sattur NH44 Stretch,9.3654,77.9234,44,2,6,highway,fatigue,normal,0.28
+Aruppukottai Highway,9.5123,78.1023,29,18,21,urban,signal_jumping,rain,0.16
+Rajapalayam Bypass,9.4567,77.5543,31,19,23,highway,overspeeding,normal,0.18
+Srivilliputhur Rural Intersection,9.5087,77.6321,17,7,10,rural,overtaking,fog,0.14
+Kooraikundu NH44 Area,9.5511,77.9422,48,23,4,highway,fatigue,rain,0.3
+Pandalkudi Village Road,9.3855,78.1211,15,6,9,rural,drunk_driving,normal,0.12
+Virudhunagar NH44 Corridor,9.5844,77.9588,40,21,3,highway,overspeeding,fog,0.26
+Kariapatti Junction,9.6122,78.0955,24,17,20,urban,signal_jumping,normal,0.15
+Watrap Highway Curve,9.6388,77.6411,26,18,22,highway,overtaking,rain,0.2
+Tiruchuli Rural Route,9.6211,78.1822,18,8,11,rural,overspeeding,fog,0.14
+Kolli Hills Hairpin Bend 1,11.2311,78.3322,25,14,17,rural,overspeeding,fog,0.32
+Kolli Hills Hairpin Bend 10,11.2422,78.3388,28,15,18,rural,overtaking,rain,0.35
+Kolli Hills Hairpin Bend 20,11.2533,78.3411,30,16,19,rural,fatigue,fog,0.38
+Kolli Hills Hairpin Bend 40,11.2711,78.3488,35,14,18,rural,overspeeding,normal,0.4
+Kolli Hills Hairpin Bend 50,11.2788,78.3511,38,15,19,rural,drunk_driving,rain,0.42
+Kalhatty Ghat Bend 5,11.4511,76.6711,26,16,19,highway,overspeeding,fog,0.34
+Kalhatty Ghat Bend 10,11.4555,76.6733,30,15,18,highway,fatigue,rain,0.36
+Kalhatty Ghat Bend 25,11.4722,76.6811,35,14,17,highway,overtaking,fog,0.4
+Kalhatty Ghat Bend 30,11.4811,76.6855,40,16,19,highway,overspeeding,normal,0.44
+Yercaud Ghat Bend 2,11.7511,78.1811,20,17,20,rural,overspeeding,fog,0.28
+Yercaud Ghat Bend 5,11.7655,78.1888,24,16,19,rural,overtaking,rain,0.3
+Yercaud Ghat Bend 15,11.7922,78.2055,30,15,18,rural,fatigue,fog,0.36
+Kodaikanal Palani Ghat Bend 5,10.3511,77.5311,22,14,17,highway,overspeeding,normal,0.3
+Kodaikanal Palani Ghat Bend 10,10.3055,77.5255,26,15,18,highway,fatigue,rain,0.35
+Kodaikanal Palani Ghat Bend 20,10.2411,77.5088,32,16,19,highway,overtaking,fog,0.4
+Sirumalai Hairpin Bend 5,10.2211,78.0122,18,17,20,rural,overspeeding,normal,0.28
+Sirumalai Hairpin Bend 18,10.1855,77.9888,26,15,18,rural,fatigue,rain,0.35
+Valparai Hairpin Bend 20,10.3411,76.9611,32,16,19,rural,overspeeding,fog,0.42
+Valparai Hairpin Bend 30,10.3555,76.9722,35,15,18,rural,overtaking,rain,0.45
+Megamalai Hairpin Bend,9.7155,77.4111,28,14,17,rural,fatigue,fog,0.38
+Kovalam ECR Stretch,12.7811,80.2455,35,21,2,highway,overspeeding,normal,0.25
+Palavakkam ECR Cattle Zone,12.9655,80.2588,40,19,23,urban,fatigue,fog,0.28
+Kottivakkam ECR Congestion,12.9722,80.2611,38,18,22,urban,signal_jumping,rain,0.22
+Neelankarai ECR Uneven Road,12.9511,80.2555,42,20,3,highway,overspeeding,normal,0.3
+Akkarai ECR Widening Zone,12.9155,80.2422,36,17,21,urban,overtaking,fog,0.24
+Vettuvankani ECR Potholes,12.9355,80.2488,34,19,23,highway,fatigue,rain,0.26
+Kanathur ECR Stretch,12.8511,80.2311,30,22,4,highway,drunk_driving,normal,0.25
+Uthandi ECR Corridor,12.8755,80.2355,28,21,2,highway,overspeeding,fog,0.22
+Injambakkam ECR Junction,12.9111,80.2411,32,18,22,urban,signal_jumping,normal,0.2
+Kudankulam Coastal Route,8.1655,77.7122,25,19,23,rural,overspeeding,rain,0.18
+Manapad Coastal Curve,8.3755,78.0555,20,17,20,rural,drunk_driving,fog,0.16
+Thondi Coast Road,9.7411,79.0222,28,18,22,highway,fatigue,normal,0.22
+Ammapattinam ECR Route,9.9255,79.1611,22,19,23,rural,overspeeding,rain,0.18
+Manamelkudi ECR Junction,10.0211,79.2222,26,20,1,highway,signal_jumping,fog,0.2
+Velankanni Coast ECR,10.6855,79.8488,40,21,3,highway,fatigue,normal,0.3

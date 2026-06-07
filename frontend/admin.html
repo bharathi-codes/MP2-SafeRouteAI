@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeRoute-AI — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+
+  /* ─── LOGIN ─── */
+  #loginOverlay{position:fixed;inset:0;background:#f1f5f9;z-index:9999;display:flex;align-items:center;justify-content:center}
+  .login-card{background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:48px 40px;width:400px;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+  .login-card .logo{text-align:center;margin-bottom:32px}
+  .login-card .logo h1{font-size:28px;color:#0f172a;letter-spacing:-0.3px}
+  .login-card .logo p{color:#94a3b8;font-size:13px;margin-top:4px}
+  .login-card .shield{display:block;margin-bottom:12px;width:64px;height:64px;margin-left:auto;margin-right:auto}
+  .login-card .shield img{width:100%;height:100%;object-fit:contain}
+  .form-group{margin-bottom:20px}
+  .form-group label{display:block;font-size:13px;color:#64748b;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .form-group input{width:100%;padding:12px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#1e293b;font-size:15px;font-family:inherit;outline:none}
+  .form-group input:focus{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.1)}
+  .login-btn{width:100%;padding:14px;background:#22c55e;border:none;border-radius:8px;color:#fff;font-size:16px;font-weight:600;font-family:inherit;cursor:pointer;margin-top:8px}
+  .login-btn:hover{background:#16a34a}
+  .login-error{color:#dc2626;font-size:13px;text-align:center;margin-top:12px;display:none}
+
+  /* ─── DASHBOARD ─── */
+  #dashboard{display:none}
+  .topbar{background:#0f172a;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .topbar .brand{display:flex;align-items:center;gap:12px}
+  .topbar .brand h1{font-size:20px;color:#ffffff}
+  .topbar .brand span{background:#22c55e;color:#fff;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600}
+  .topbar .user-info{display:flex;align-items:center;gap:16px}
+  .topbar .user-info .user-badge{background:rgba(255,255,255,0.08);padding:6px 16px;border-radius:8px;font-size:13px;color:rgba(255,255,255,0.6)}
+  .topbar .logout-btn{background:#dc2626;border:none;color:#fff;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit}
+  .topbar .logout-btn:hover{background:#b91c1c}
+  .topbar .back-btn{background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.7);padding:8px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;text-decoration:none}
+  .topbar .back-btn:hover{background:rgba(255,255,255,0.15);color:#fff}
+
+  .container{max-width:1400px;margin:0 auto;padding:24px 32px}
+
+  /* ─── STATS CARDS ─── */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .stat-card{background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:20px 24px;position:relative;overflow:hidden}
+  .stat-card .stat-icon{font-size:24px;position:absolute;top:16px;right:20px;opacity:.2;font-weight:700;color:#94a3b8}
+  .stat-card .stat-label{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+  .stat-card .stat-value{font-size:32px;font-weight:700;margin-top:8px}
+  .stat-card .stat-sub{font-size:12px;color:#94a3b8;margin-top:4px}
+  .stat-card.green .stat-value{color:#22c55e}
+  .stat-card.blue .stat-value{color:#3b82f6}
+  .stat-card.amber .stat-value{color:#f59e0b}
+  .stat-card.red .stat-value{color:#ef4444}
+
+  /* ─── SECTIONS ─── */
+  .section{background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;margin-bottom:24px;overflow:hidden}
+  .section-header{padding:16px 24px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between}
+  .section-header h2{font-size:16px;font-weight:600;color:#0f172a;display:flex;align-items:center;gap:8px}
+  .section-body{padding:24px}
+
+  /* ─── API TESTER ─── */
+  .api-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .api-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px}
+  .api-card.pass{border-color:#22c55e}
+  .api-card.fail{border-color:#ef4444}
+  .api-card .api-method{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-right:8px}
+  .api-card .api-method.get{background:#22c55e;color:#fff}
+  .api-card .api-method.post{background:#f59e0b;color:#fff}
+  .api-card .api-path{font-family:'Consolas','Courier New',monospace;font-size:14px;color:#0f172a}
+  .api-card .api-desc{font-size:12px;color:#94a3b8;margin-top:6px}
+  .api-card .api-result{margin-top:10px;padding:10px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;font-family:'Consolas',monospace;font-size:12px;max-height:120px;overflow-y:auto;display:none;white-space:pre-wrap;word-break:break-all;color:#334155}
+  .api-card .api-status{display:inline-block;margin-top:8px;font-size:12px;font-weight:600;padding:2px 10px;border-radius:10px}
+  .api-card .api-status.ok{background:#f0fdf4;color:#16a34a}
+  .api-card .api-status.err{background:#fef2f2;color:#dc2626}
+  .api-card .api-status.pending{background:#eff6ff;color:#3b82f6}
+  .api-card .api-time{font-size:11px;color:#94a3b8;margin-left:8px}
+  .run-all-btn{background:#22c55e;border:none;color:#fff;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:8px}
+  .run-all-btn:hover{background:#16a34a}
+  .run-all-btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* ─── PROJECT INFO ─── */
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .info-block h3{font-size:14px;color:#0f172a;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .info-table{width:100%}
+  .info-table tr td{padding:6px 0;font-size:13px;border-bottom:1px solid #f1f5f9}
+  .info-table tr td:first-child{color:#94a3b8;width:160px;font-weight:500}
+  .info-table tr td:last-child{color:#1e293b;font-family:'Consolas',monospace;font-size:12px}
+
+  /* ─── RISK DISTRIBUTION ─── */
+  .risk-bars{display:flex;gap:16px;margin-top:12px}
+  .risk-bar{flex:1;text-align:center}
+  .risk-bar .bar{height:8px;border-radius:4px;margin-bottom:6px}
+  .risk-bar .bar-label{font-size:12px;font-weight:600}
+  .risk-bar .bar-count{font-size:20px;font-weight:700;margin-top:4px}
+
+  /* ─── LIVE CONSOLE ─── */
+  .console{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:16px;font-family:'Consolas','Courier New',monospace;font-size:12px;max-height:300px;overflow-y:auto;line-height:1.8}
+  .console .log-line{display:flex;gap:8px}
+  .console .log-time{color:#475569;min-width:80px}
+  .console .log-ok{color:#22c55e}
+  .console .log-err{color:#ef4444}
+  .console .log-info{color:#3b82f6}
+  .console .log-warn{color:#f59e0b}
+
+  /* ─── DATASET TABLE ─── */
+  .dataset-table-wrap{max-height:400px;overflow:auto;border-radius:8px;border:1px solid #e2e8f0}
+  .dataset-table{width:100%;border-collapse:collapse;font-size:12px}
+  .dataset-table th{background:#f8fafc;color:#64748b;padding:10px 12px;text-align:left;position:sticky;top:0;z-index:1;text-transform:uppercase;font-size:11px;letter-spacing:.5px;border-bottom:1px solid #e2e8f0}
+  .dataset-table td{padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#334155}
+  .dataset-table tr:hover td{background:#f8fafc}
+  .risk-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600}
+  .risk-badge.HIGH{background:#fef2f2;color:#dc2626}
+  .risk-badge.MEDIUM{background:#fffbeb;color:#d97706}
+  .risk-badge.LOW{background:#f0fdf4;color:#16a34a}
+
+  .tab-row{display:flex;gap:4px;margin-bottom:16px}
+  .tab-btn{padding:10px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;color:#94a3b8;font-size:13px;font-weight:600;font-family:inherit}
+  .tab-btn.active{background:#ffffff;color:#22c55e;border-color:#22c55e;border-bottom:1px solid #ffffff;margin-bottom:-1px;position:relative;z-index:1}
+
+  .search-input{padding:8px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;color:#1e293b;font-size:13px;font-family:inherit;outline:none;width:260px}
+  .search-input:focus{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.1)}
+
+  @media(max-width:900px){
+    .stats-row{grid-template-columns:1fr 1fr}
+    .api-grid{grid-template-columns:1fr}
+    .info-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:600px){
+    .stats-row{grid-template-columns:1fr}
+    .container{padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ LOGIN OVERLAY ═══════ -->
+<div id="loginOverlay">
+  <div class="login-card">
+    <div class="logo">
+      <span class="shield"><img src="/static/gps.png" alt="SafeRoute-AI"></span>
+      <h1>SafeRoute-AI</h1>
+      <p>Admin Control Panel</p>
+    </div>
+    <div class="form-group">
+      <label>Admin ID</label>
+      <input type="text" id="loginId" placeholder="Enter admin ID" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Enter password" autocomplete="off">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Invalid credentials. Try again.</div>
+  </div>
+</div>
+
+<!-- ═══════ DASHBOARD ═══════ -->
+<div id="dashboard">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="brand">
+      <h1>SafeRoute-AI</h1>
+      <span>ADMIN</span>
+    </div>
+    <div class="user-info">
+      <a href="/" class="back-btn" target="_blank">Open Main App</a>
+      <div class="user-badge">batch16</div>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card green">
+        <span class="stat-icon" style="color:#22c55e;font-weight:700">ON</span>
+        <div class="stat-label">Server Status</div>
+        <div class="stat-value" id="statServer">—</div>
+        <div class="stat-sub">FastAPI + Uvicorn</div>
+      </div>
+      <div class="stat-card blue">
+        <span class="stat-icon" style="font-weight:700">LOC</span>
+        <div class="stat-label">Zones Loaded</div>
+        <div class="stat-value" id="statZones">—</div>
+        <div class="stat-sub">Accident hotspot zones</div>
+      </div>
+      <div class="stat-card amber">
+        <span class="stat-icon" style="font-weight:700">ML</span>
+        <div class="stat-label">ML Model</div>
+        <div class="stat-value" id="statModel">—</div>
+        <div class="stat-sub">RandomForestClassifier</div>
+      </div>
+      <div class="stat-card red">
+        <span class="stat-icon" style="font-weight:700">API</span>
+        <div class="stat-label">API Health</div>
+        <div class="stat-value" id="statApiHealth">—</div>
+        <div class="stat-sub" id="statApiSub">Endpoints tested</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tab-row">
+      <div class="tab-btn active" onclick="switchTab('api')">API Health Check</div>
+      <div class="tab-btn" onclick="switchTab('dataset')">Dataset Explorer</div>
+      <div class="tab-btn" onclick="switchTab('project')">Project Info</div>
+      <div class="tab-btn" onclick="switchTab('console')">Live Console</div>
+    </div>
+
+    <!-- TAB: API HEALTH CHECK -->
+    <div class="section tab-content" id="tab-api">
+      <div class="section-header">
+        <h2>API Endpoint Health Check</h2>
+        <button class="run-all-btn" id="runAllBtn" onclick="runAllTests()">
+          <span>▶</span> Run All Tests
+        </button>
+      </div>
+      <div class="section-body">
+        <div class="api-grid" id="apiGrid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DATASET EXPLORER -->
+    <div class="section tab-content" id="tab-dataset" style="display:none">
+      <div class="section-header">
+        <h2>Dataset Explorer</h2>
+        <input type="text" class="search-input" id="datasetSearch" placeholder="Search zones..." oninput="filterDataset()">
+      </div>
+      <div class="section-body">
+        <div style="margin-bottom:16px">
+          <div class="risk-bars" id="riskBars"></div>
+        </div>
+        <div class="dataset-table-wrap">
+          <table class="dataset-table" id="datasetTable">
+            <thead><tr>
+              <th>#</th><th>Location</th><th>Lat</th><th>Lon</th><th>Accidents</th><th>Road Type</th><th>Cause</th><th>Fatality</th><th>Risk</th>
+            </tr></thead>
+            <tbody id="datasetBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PROJECT INFO -->
+    <div class="section tab-content" id="tab-project" style="display:none">
+      <div class="section-header">
+        <h2>Complete Project Information</h2>
+      </div>
+      <div class="section-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <h3>System Architecture</h3>
+            <table class="info-table">
+              <tr><td>Application</td><td>SafeRoute-AI — Smart Accident Risk Navigation</td></tr>
+              <tr><td>Region</td><td>Tamil Nadu, India (All 37 Districts)</td></tr>
+              <tr><td>Backend</td><td>Python 3 + FastAPI + Uvicorn</td></tr>
+              <tr><td>Frontend</td><td>Vanilla HTML/CSS/JS + Leaflet.js</td></tr>
+              <tr><td>ML Framework</td><td>scikit-learn (RandomForestClassifier)</td></tr>
+              <tr><td>AI Engine</td><td>Google Gemini 2.0 Flash</td></tr>
+              <tr><td>Weather API</td><td>OpenWeatherMap</td></tr>
+              <tr><td>Routing API</td><td>OpenRouteService</td></tr>
+              <tr><td>Map Tiles</td><td>OpenStreetMap (Leaflet.js)</td></tr>
+              <tr><td>Geocoding</td><td>Nominatim (TN-bounded)</td></tr>
+            </table>
+          </div>
+          <div class="info-block">
+            <h3>ML Model Details</h3>
+            <table class="info-table">
+              <tr><td>Algorithm</td><td>RandomForestClassifier</td></tr>
+              <tr><td>Estimators</td><td>200 trees, max_depth=10</td></tr>
+              <tr><td>Features</td><td>lat, lon, accident_count, peak_hour, road_type, weather_risk, fatality_rate</td></tr>
+              <tr><td>Classes</td><td>HIGH, MEDIUM, LOW</td></tr>
+              <tr><td>Accuracy</td><td id="modelAccuracy">Loading...</td></tr>
+              <tr><td>Training Data</td><td id="modelTrainCount">Loading...</td></tr>
+              <tr><td>Model File</td><td>model/risk_model.pkl</td></tr>
+            </table>
+          </div>
+          <div class="info-block">
+            <h3>API Endpoints</h3>
+            <table class="info-table">
+              <tr><td>GET /</td><td>Serve main frontend application</td></tr>
+              <tr><td>GET /admin</td><td>Admin dashboard (this page)</td></tr>
+              <tr><td>GET /api/zones</td><td>All accident zones with risk levels</td></tr>
+              <tr><td>GET /api/weather</td><td>Live weather data + risk multiplier</td></tr>
+              <tr><td>GET /api/zone-insight</td><td>AI safety briefing for nearest zone</td></tr>
+              <tr><td>GET /api/nearby-risk</td><td>Real-time proximity risk check</td></tr>
+              <tr><td>POST /api/route-risk</td><td>Full route risk analysis + scoring</td></tr>
+              <tr><td>GET /api/admin/stats</td><td>Admin statistics endpoint</td></tr>
+            </table>
+          </div>
+          <div class="info-block">
+            <h3>Backend Modules</h3>
+            <table class="info-table">
+              <tr><td>main.py</td><td>FastAPI server, CORS, all endpoints</td></tr>
+              <tr><td>ml_model.py</td><td>ML training, prediction, zone lookup</td></tr>
+              <tr><td>weather.py</td><td>OpenWeatherMap integration, 10-min cache</td></tr>
+              <tr><td>ai_analyst.py</td><td>Gemini AI safety insight generator</td></tr>
+              <tr><td>route_scorer.py</td><td>ORS route geometry + risk scoring</td></tr>
+            </table>
+          </div>
+          <div class="info-block">
+            <h3>Dataset Coverage</h3>
+            <table class="info-table">
+              <tr><td>Total Zones</td><td id="infoTotalZones">Loading...</td></tr>
+              <tr><td>Districts</td><td>All 37 Tamil Nadu Districts</td></tr>
+              <tr><td>Coverage</td><td>Highways, Urban, Rural, Ghat, Coastal</td></tr>
+              <tr><td>Includes</td><td>Villages, Pilgrim Routes, Industrial Roads</td></tr>
+              <tr><td>Data Points</td><td>Location, Coords, Accident Count, Peak Hours, Road Type, Cause, Weather Risk, Fatality Rate</td></tr>
+              <tr><td>Data Source</td><td>TN Police, NCRB, World Bank, News Reports</td></tr>
+            </table>
+          </div>
+          <div class="info-block">
+            <h3>Key Features</h3>
+            <table class="info-table">
+              <tr><td>Real-time Map</td><td>521+ risk zones displayed on Leaflet map</td></tr>
+              <tr><td>Route Analysis</td><td>Color-coded route risk segments (5km)</td></tr>
+              <tr><td>AI Insights</td><td>Gemini-powered safety briefings</td></tr>
+              <tr><td>Weather Aware</td><td>Live weather risk multiplier</td></tr>
+              <tr><td>Voice Alerts</td><td>Web Speech API proximity warnings</td></tr>
+              <tr><td>GPS Tracking</td><td>Real-time driver location monitoring</td></tr>
+              <tr><td>Autocomplete</td><td>TN-bounded Nominatim location search</td></tr>
+              <tr><td>Admin Panel</td><td>API health check + dataset explorer</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: LIVE CONSOLE -->
+    <div class="section tab-content" id="tab-console" style="display:none">
+      <div class="section-header">
+        <h2>Live API Console</h2>
+        <button class="run-all-btn" onclick="clearConsole()" style="background:#64748b">Clear Console</button>
+      </div>
+      <div class="section-body">
+        <div class="console" id="liveConsole">
+          <div class="log-line"><span class="log-time">--:--:--</span><span class="log-info">Console initialized. Waiting for API activity...</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</div><!-- /dashboard -->
+
+<script>
+const BASE = window.location.origin;
+let _adminToken = sessionStorage.getItem('roadsense_token') || '';
+
+// ─── LOGIN (server-side auth) ───
+async function doLogin(){
+  const id = document.getElementById('loginId').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  const err = document.getElementById('loginError');
+  try {
+    const resp = await fetch(BASE+'/api/admin/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({username: id, password: pass})
+    });
+    const data = await resp.json();
+    if(resp.ok && data.token){
+      err.style.display='none';
+      _adminToken = data.token;
+      sessionStorage.setItem('roadsense_token', _adminToken);
+      document.getElementById('loginOverlay').style.display='none';
+      document.getElementById('dashboard').style.display='block';
+      initDashboard();
+    } else {
+      err.style.display='block';
+    }
+  } catch(e){
+    err.style.display='block';
+  }
+}
+function doLogout(){
+  _adminToken = '';
+  sessionStorage.removeItem('roadsense_token');
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('loginOverlay').style.display='flex';
+  document.getElementById('loginId').value='';
+  document.getElementById('loginPass').value='';
+}
+
+// Check session on load
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && document.getElementById('loginOverlay').style.display!=='none')doLogin();
+});
+window.addEventListener('load',()=>{
+  if(_adminToken){
+    // Validate token with server
+    fetch(BASE+'/api/admin/stats',{headers:{'Authorization':_adminToken}})
+      .then(r=>{
+        if(r.ok){
+          document.getElementById('loginOverlay').style.display='none';
+          document.getElementById('dashboard').style.display='block';
+          initDashboard();
+        } else {
+          _adminToken='';
+          sessionStorage.removeItem('roadsense_token');
+        }
+      }).catch(()=>{});
+  }
+});
+
+// ─── TABS ───
+function switchTab(name){
+  document.querySelectorAll('.tab-content').forEach(el=>el.style.display='none');
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).style.display='block';
+  event.target.classList.add('active');
+}
+
+// ─── CONSOLE LOGGER ───
+function _esc(s){if(s==null)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
+
+function logConsole(level, msg){
+  const console_el = document.getElementById('liveConsole');
+  const now = new Date();
+  const ts = now.toTimeString().slice(0,8);
+  const cls = level==='ok'?'log-ok':level==='err'?'log-err':level==='warn'?'log-warn':'log-info';
+  const div = document.createElement('div');
+  div.className='log-line';
+  div.innerHTML=`<span class="log-time">${ts}</span><span class="${cls}">${_esc(msg)}</span>`;
+  console_el.appendChild(div);
+  console_el.scrollTop=console_el.scrollHeight;
+}
+function clearConsole(){
+  document.getElementById('liveConsole').innerHTML='<div class="log-line"><span class="log-time">'+new Date().toTimeString().slice(0,8)+'</span><span class="log-info">Console cleared.</span></div>';
+}
+
+// ─── API DEFINITIONS ───
+const API_TESTS = [
+  {method:'GET', path:'/api/zones', desc:'Fetch all accident zones with risk levels', validate:r=>`${r.length} zones loaded`},
+  {method:'GET', path:'/api/weather?lat=13.0827&lon=80.2707', desc:'Weather data for Chennai', validate:r=>`${r.condition}, ${r.temp_c}°C, Risk ×${r.risk_multiplier}`},
+  {method:'GET', path:'/api/zone-insight?lat=13.0827&lon=80.2707', desc:'AI safety insight for nearest zone', validate:r=>`${r.zone_name} — ${r.risk_level}`},
+  {method:'GET', path:'/api/nearby-risk?lat=13.0827&lon=80.2707', desc:'Proximity risk check', validate:r=>`Risk: ${r.risk_level}, Score: ${r.risk_score}`},
+  {method:'POST', path:'/api/route-risk', desc:'Route risk analysis (Chennai → Vellore)', body:{origin_lat:13.0827,origin_lon:80.2707,dest_lat:12.9165,dest_lon:79.1325}, validate:r=>`Score: ${r.overall_score}, Level: ${r.risk_level}, ${r.segments?.length||0} segments`},
+  {method:'GET', path:'/api/admin/stats', desc:'Admin statistics & model info', validate:r=>`${r.total_zones} zones, Model: ${r.model_accuracy}`},
+];
+
+function buildApiCards(){
+  const grid=document.getElementById('apiGrid');
+  grid.innerHTML='';
+  API_TESTS.forEach((t,i)=>{
+    const card=document.createElement('div');
+    card.className='api-card';
+    card.id='api-card-'+i;
+    card.innerHTML=`
+      <span class="api-method ${t.method.toLowerCase()}">${t.method}</span>
+      <span class="api-path">${t.path.split('?')[0]}</span>
+      <div class="api-desc">${t.desc}</div>
+      <div class="api-result" id="api-result-${i}"></div>
+      <div id="api-status-wrap-${i}"></div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+async function runSingleTest(idx){
+  const t = API_TESTS[idx];
+  const card = document.getElementById('api-card-'+idx);
+  const resultEl = document.getElementById('api-result-'+idx);
+  const statusWrap = document.getElementById('api-status-wrap-'+idx);
+
+  card.className='api-card';
+  statusWrap.innerHTML='<span class="api-status pending">Testing...</span>';
+  resultEl.style.display='none';
+
+  const start = performance.now();
+  try {
+    const opts = {method:t.method, headers:{}};
+    if(t.path.includes('/admin/')){
+      opts.headers['Authorization'] = _adminToken;
+    }
+    if(t.body){
+      opts.headers['Content-Type']='application/json';
+      opts.body=JSON.stringify(t.body);
+    }
+    logConsole('info',`→ ${t.method} ${t.path}`);
+    const resp = await fetch(BASE+t.path, opts);
+    const ms = Math.round(performance.now()-start);
+    const data = await resp.json();
+
+    if(resp.ok && !data.error){
+      const summary = t.validate(data);
+      statusWrap.innerHTML=`<span class="api-status ok">${resp.status} OK</span><span class="api-time">${ms}ms</span>`;
+      resultEl.textContent = summary+'\n'+JSON.stringify(data,null,2).slice(0,500);
+      resultEl.style.display='block';
+      card.className='api-card pass';
+      logConsole('ok',`${t.method} ${t.path.split('?')[0]} → ${resp.status} (${ms}ms) — ${summary}`);
+      return true;
+    } else {
+      statusWrap.innerHTML=`<span class="api-status err">${resp.status} Error</span><span class="api-time">${ms}ms</span>`;
+      resultEl.textContent=JSON.stringify(data,null,2);
+      resultEl.style.display='block';
+      card.className='api-card fail';
+      logConsole('err',`${t.method} ${t.path.split('?')[0]} → ${resp.status} (${ms}ms) — ${JSON.stringify(data)}`);
+      return false;
+    }
+  } catch(e){
+    const ms=Math.round(performance.now()-start);
+    statusWrap.innerHTML=`<span class="api-status err">FAILED</span><span class="api-time">${ms}ms</span>`;
+    resultEl.textContent=e.message;
+    resultEl.style.display='block';
+    card.className='api-card fail';
+    logConsole('err',`${t.method} ${t.path.split('?')[0]} → FAILED (${ms}ms) — ${e.message}`);
+    return false;
+  }
+}
+
+async function runAllTests(){
+  const btn=document.getElementById('runAllBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span></span> Running...';
+  logConsole('info','━━━ Running all API health checks ━━━');
+
+  let pass=0, fail=0;
+  for(let i=0;i<API_TESTS.length;i++){
+    const ok=await runSingleTest(i);
+    if(ok)pass++;else fail++;
+  }
+
+  const total=API_TESTS.length;
+  document.getElementById('statApiHealth').textContent=`${pass}/${total}`;
+  document.getElementById('statApiSub').textContent=fail===0?'All endpoints healthy':fail+' endpoint(s) failed';
+
+  logConsole(fail===0?'ok':'warn',`━━━ Health check complete: ${pass}/${total} passed ━━━`);
+  btn.disabled=false;
+  btn.innerHTML='<span>▶</span> Run All Tests';
+}
+
+// ─── DASHBOARD INIT ───
+let allZones=[];
+
+async function initDashboard(){
+  buildApiCards();
+  logConsole('info','Dashboard initializing...');
+
+  // Fetch zones for stats
+  try{
+    const resp=await fetch(BASE+'/api/zones');
+    allZones=await resp.json();
+    const count=allZones.length;
+    document.getElementById('statServer').textContent='ONLINE';
+    document.getElementById('statZones').textContent=count;
+    logConsole('ok',`Server online. ${count} zones loaded.`);
+
+    // Risk distribution
+    let high=0,medium=0,low=0;
+    allZones.forEach(z=>{
+      if(z.risk_level==='HIGH')high++;
+      else if(z.risk_level==='MEDIUM')medium++;
+      else low++;
+    });
+    document.getElementById('riskBars').innerHTML=`
+      <div class="risk-bar"><div class="bar" style="background:#ef4444;width:100%"></div><div class="bar-label" style="color:#ef4444">HIGH</div><div class="bar-count" style="color:#ef4444">${high}</div></div>
+      <div class="risk-bar"><div class="bar" style="background:#f59e0b;width:100%"></div><div class="bar-label" style="color:#f59e0b">MEDIUM</div><div class="bar-count" style="color:#f59e0b">${medium}</div></div>
+      <div class="risk-bar"><div class="bar" style="background:#22c55e;width:100%"></div><div class="bar-label" style="color:#22c55e">LOW</div><div class="bar-count" style="color:#22c55e">${low}</div></div>
+    `;
+
+    // Fill dataset table
+    populateDataset(allZones);
+
+    // Info fields
+    document.getElementById('infoTotalZones').textContent=count+' zones';
+
+  }catch(e){
+    document.getElementById('statServer').textContent='OFFLINE';
+    logConsole('err','Cannot connect to server: '+e.message);
+  }
+
+  // Fetch admin stats
+  try{
+    const resp=await fetch(BASE+'/api/admin/stats',{headers:{'Authorization':_adminToken}});
+    const stats=await resp.json();
+    document.getElementById('statModel').textContent=stats.model_accuracy||'N/A';
+    document.getElementById('modelAccuracy').textContent=stats.model_accuracy||'N/A';
+    document.getElementById('modelTrainCount').textContent=(stats.total_zones||'?')+' zones';
+    logConsole('ok','Admin stats loaded: '+JSON.stringify(stats));
+  }catch(e){
+    document.getElementById('statModel').textContent='N/A';
+    logConsole('warn','Could not fetch admin stats: '+e.message);
+  }
+}
+
+function populateDataset(zones){
+  const tbody=document.getElementById('datasetBody');
+  tbody.innerHTML='';
+  zones.forEach((z,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${i+1}</td>
+      <td>${_esc(z.location||'')}</td>
+      <td>${(z.latitude||0).toFixed(4)}</td>
+      <td>${(z.longitude||0).toFixed(4)}</td>
+      <td>${_esc(z.accident_count||0)}</td>
+      <td>${_esc(z.road_type||'')}</td>
+      <td>${_esc(z.common_cause||'')}</td>
+      <td>${((z.fatality_rate||0)*100).toFixed(1)}%</td>
+      <td><span class="risk-badge ${_esc(z.risk_level)}">${_esc(z.risk_level)}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function filterDataset(){
+  const q=document.getElementById('datasetSearch').value.toLowerCase();
+  const filtered=allZones.filter(z=>(z.location||'').toLowerCase().includes(q)||(z.common_cause||'').toLowerCase().includes(q)||(z.road_type||'').toLowerCase().includes(q));
+  populateDataset(filtered);
+}
+</script>
+</body>
+</html>

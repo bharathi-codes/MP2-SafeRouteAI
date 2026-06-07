@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeRoute-AI — Smart Accident Risk Navigation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ─── HEADER ─────────────────────────────── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0f172a;
+            padding: 12px 24px;
+            height: 56px;
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+        }
+        .logo-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            margin-right: 8px;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .badge {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .monitor-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+            padding: 7px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+        }
+        .monitor-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        .weather-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+        }
+        .weather-badge .condition { color: rgba(255,255,255,0.8); }
+        .weather-badge .multiplier { color: #f87171; font-weight: 600; font-size: 12px; }
+
+        /* ─── SEARCH BAR ────────────────────────── */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffff;
+            padding: 12px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+        .search-bar label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .ac-wrapper {
+            flex: 1;
+            position: relative;
+            min-width: 0;
+        }
+        .ac-wrapper input {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 400;
+            outline: none;
+        }
+        .ac-wrapper input:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+        }
+        .ac-wrapper input::placeholder { color: #94a3b8; }
+        .ac-list {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0; right: 0;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            max-height: 240px;
+            overflow-y: auto;
+            z-index: 9000;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        .ac-list.open { display: block; }
+        .ac-item {
+            padding: 10px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+        }
+        .ac-item:last-child { border-bottom: none; }
+        .ac-item:hover, .ac-item.active { background: #f8fafc; }
+        .ac-item .ac-main { color: #1e293b; font-weight: 600; }
+        .ac-item .ac-sub { color: #94a3b8; font-size: 11px; margin-top: 3px; }
+        .btn-analyze {
+            background: #22c55e;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+        }
+        .btn-analyze:hover { background: #16a34a; }
+        .btn-analyze:active { background: #15803d; }
+        .btn-analyze:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-clear {
+            background: #64748b;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-clear:hover { background: #475569; }
+
+        /* ─── MAIN LAYOUT ───────────────────────── */
+        .main {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+        }
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+        #map { width: 100%; height: 100%; }
+
+        /* ─── SIDEBAR ───────────────────────────── */
+        .sidebar {
+            width: 360px;
+            background: #ffffff;
+            border-left: 1px solid #e2e8f0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .sidebar-section {
+            padding: 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .sidebar-section h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #94a3b8;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        /* AI Insight Card */
+        .ai-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .ai-card .zone-name {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+        .ai-card .risk-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .ai-card .insight-text {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #64748b;
+        }
+
+        /* Risk levels */
+        .risk-HIGH { background: #fef2f2; color: #dc2626; }
+        .risk-MEDIUM { background: #fffbeb; color: #d97706; }
+        .risk-LOW { background: #f0fdf4; color: #16a34a; }
+
+        /* Route Summary */
+        .route-summary {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .route-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .stat-box {
+            text-align: center;
+            padding: 14px 10px;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+        .stat-box .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .stat-box .stat-label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        /* Timeline bar */
+        .timeline-bar {
+            display: flex;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 12px 0;
+            background: #e2e8f0;
+        }
+        .timeline-segment { height: 100%; }
+        .timeline-segment.HIGH { background: #ef4444; }
+        .timeline-segment.MEDIUM { background: #f59e0b; }
+        .timeline-segment.LOW { background: #22c55e; }
+
+        /* Zone warnings list */
+        .zone-warning {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            padding: 14px;
+            background: #f8fafc;
+            border-radius: 14px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+            border-left: 3px solid #ef4444;
+        }
+        .zone-warning .zw-km {
+            background: #f1f5f9;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            color: #64748b;
+        }
+        .zone-warning .zw-info {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .zone-warning .zw-name { font-weight: 600; color: #0f172a; }
+        .zone-warning .zw-cause { color: #94a3b8; }
+
+        /* No-data message */
+        .no-data {
+            color: #94a3b8;
+            font-size: 13px;
+            text-align: center;
+            padding: 24px 16px;
+            line-height: 1.6;
+        }
+
+        /* Legend */
+        .legend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ─── TOAST ─────────────────────────────── */
+        .toast-container {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .toast {
+            background: #ffffff;
+            border: 1px solid #fecaca;
+            border-left: 3px solid #ef4444;
+            padding: 14px 20px;
+            border-radius: 14px;
+            min-width: 320px;
+            max-width: 420px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .toast .toast-title { font-weight: 700; font-size: 13px; color: #dc2626; }
+        .toast .toast-msg { font-size: 12px; color: #64748b; margin-top: 4px; line-height: 1.5; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ─── LOADING OVERLAY ───────────────────── */
+        .loading-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(241,245,249,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+        }
+        .loading-overlay.active { display: flex; }
+        .loading-overlay .spinner-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #22c55e;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ─── LEAFLET OVERRIDES ─────────────────── */
+        .leaflet-popup-content-wrapper {
+            background: #ffffff !important;
+            color: #1e293b !important;
+            border-radius: 16px !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+        }
+        .leaflet-popup-tip { background: #ffffff !important; }
+        .leaflet-popup-content { font-size: 13px; line-height: 1.6; font-family: 'Inter', sans-serif; }
+        .leaflet-control-zoom a {
+            background: #ffffff !important;
+            color: #64748b !important;
+            border-color: #e2e8f0 !important;
+            font-weight: 500 !important;
+        }
+        .leaflet-control-zoom a:hover {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+        }
+
+        /* ─── CUSTOM MAP MARKERS ─────────────────── */
+        .zone-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        .zone-dot.HIGH { background: #ef4444; }
+        .zone-dot.MEDIUM { background: #f59e0b; }
+        .zone-dot.LOW { background: #22c55e; }
+        .zone-label {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s;
+            font-family: 'Inter', sans-serif;
+        }
+        .zone-marker { position: relative; }
+        .zone-marker:hover .zone-label { opacity: 1; }
+
+        /* User location marker */
+        .user-loc-marker {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .user-loc-dot {
+            width: 14px;
+            height: 14px;
+            background: #3b82f6;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 1px 6px rgba(59,130,246,0.4);
+            z-index: 2;
+            position: relative;
+        }
+        .user-loc-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.2);
+            z-index: 1;
+        }
+        .user-loc-label {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        /* Route start/end markers */
+        .route-pin {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .route-pin-head {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            border: 2px solid #fff;
+            font-family: 'Inter', sans-serif;
+        }
+        .route-pin-head.start { background: #22c55e; }
+        .route-pin-head.end { background: #ef4444; }
+        .route-pin-stem {
+            width: 2px;
+            height: 8px;
+            background: #64748b;
+            border-radius: 0 0 2px 2px;
+        }
+
+        /* Map zone count overlay */
+        .map-zone-count {
+            position: absolute;
+            bottom: 28px;
+            left: 12px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px 14px;
+            z-index: 800;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .map-zone-count .mzc-num {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .map-zone-count .mzc-label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        .map-zone-count .mzc-dots {
+            display: flex;
+            gap: 4px;
+            margin-left: 4px;
+        }
+        .map-zone-count .mzc-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+        }
+
+        /* ─── RESPONSIVE ────────────────────────── */
+        @media (max-width: 900px) {
+            .main { flex-direction: column; }
+            .sidebar { width: 100%; height: 40vh; }
+            .map-container { height: 60vh; }
+            .search-bar { flex-wrap: wrap; }
+            .ac-wrapper { min-width: 120px; }
+            .legend-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-left">
+        <span class="logo"><span class="logo-icon"><img src="/static/gps.png" alt="SafeRoute-AI"></span>SafeRoute-AI</span>
+        <span class="badge">Tamil Nadu</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+        <a href="/admin" target="_blank" class="monitor-btn">Monitor</a>
+        <div class="weather-badge" id="weatherBadge">
+        <span class="weather-icon-text">--</span>
+        <span class="condition" id="weatherCondition">Loading...</span>
+        <span class="multiplier" id="weatherMultiplier"></span>
+    </div>
+    </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar">
+    <label>From</label>
+    <div class="ac-wrapper">
+        <input type="text" id="originInput" placeholder="e.g. Chennai, Tambaram, Vandalur..." autocomplete="off" />
+        <div class="ac-list" id="originAC"></div>
+    </div>
+    <label>To</label>
+    <div class="ac-wrapper">
+        <input type="text" id="destInput" placeholder="e.g. Madurai, Salem, Ooty..." autocomplete="off" />
+        <div class="ac-list" id="destAC"></div>
+    </div>
+    <button class="btn-analyze" id="analyzeBtn" onclick="analyzeRoute()">
+        ANALYZE ROUTE RISK
+    </button>
+    <button class="btn-clear" id="clearBtn" onclick="clearRoute()" style="display:none;">
+        CLEAR
+    </button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <div class="map-container">
+        <div id="map"></div>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner-wrap"><div class="spinner"></div></div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <!-- AI Analyst -->
+        <div class="sidebar-section">
+            <h3>AI Safety Analyst</h3>
+            <div class="ai-card" id="aiCard">
+                <div class="no-data">Click a zone on the map or analyze a route to see AI insights.</div>
+            </div>
+        </div>
+        <!-- Route Summary -->
+        <div class="sidebar-section" id="routeSection" style="display:none;">
+            <h3>Route Risk Report</h3>
+            <div class="route-summary" id="routeSummary"></div>
+        </div>
+        <!-- Zone Warnings -->
+        <div class="sidebar-section" id="warningsSection" style="display:none;">
+            <h3>Danger Zones on Route</h3>
+            <div id="zoneWarnings"></div>
+        </div>
+        <!-- Legend -->
+        <div class="sidebar-section">
+            <h3>Map Legend</h3>
+            <div class="legend-grid">
+                <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>High Risk</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Medium Risk</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Low Risk</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#3388ff"></div>Your Location</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════
+const API_BASE = '';
+const TN_CENTER = [10.8, 78.7];
+// Tight Tamil Nadu bounding box
+const TN_MAX_BOUNDS = L.latLngBounds([7.9, 76.0], [13.6, 80.5]);
+const RISK_COLORS = { HIGH: '#ef4444', MEDIUM: '#f59e0b', LOW: '#22c55e' };
+const NEARBY_CHECK_INTERVAL = 10000;
+const WEATHER_CHECK_INTERVAL = 600000;
+const ALERT_COOLDOWN = 120000;
+
+// Nominatim bounding box for Tamil Nadu (viewbox): lon1,lat1,lon2,lat2
+const TN_VIEWBOX = '76.0,8.0,80.5,13.6';
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let map, userMarker, routeLayer;
+let zones = [];
+let lastAlertTimes = {};
+let gpsWatchId = null;
+// Autocomplete state
+let originCoords = null;
+let destCoords = null;
+
+// Console logging (disabled in production — set DEBUG=true to enable)
+const DEBUG = false;
+function tlog(...args){ if(DEBUG) console.log('[SafeRoute]', ...args); }
+function tlogReq(url){ if(DEBUG) console.log('%c[API] >>>', 'color:#60a5fa', url); }
+function tlogRes(url, status){ if(DEBUG) console.log('%c[API] <<<', status<400?'color:#22c55e':'color:#ef4444', url, status); }
+function tlogInfo(msg){ if(DEBUG) console.log('%c[Info]', 'color:#94a3b8', msg); }
+function tlogError(msg){ if(DEBUG) console.error('[Error]', msg); }
+function tlogSuccess(msg){ if(DEBUG) console.log('%c[OK]', 'color:#22c55e;font-weight:bold', msg); }
+
+// HTML escape to prevent XSS from API data
+function esc(s){ if(s==null) return ''; const d=document.createElement('div'); d.textContent=String(s); return d.innerHTML; }
+
+// ═══════════════════════════════════════════════
+// INIT MAP — locked to Tamil Nadu, high zoom
+// ═══════════════════════════════════════════════
+function initMap() {
+    map = L.map('map', {
+        center: TN_CENTER,
+        zoom: 7,
+        minZoom: 7,
+        maxZoom: 19,
+        maxBounds: TN_MAX_BOUNDS,
+        maxBoundsViscosity: 1.0,
+        zoomControl: true,
+        attributionControl: true,
+        renderer: L.canvas(),
+    });
+
+    // Default OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19,
+    }).addTo(map);
+
+    map.fitBounds(TN_MAX_BOUNDS);
+    tlogSuccess('Map initialized — locked to Tamil Nadu, zoom 7–19');
+}
+
+// ═══════════════════════════════════════════════
+// AUTOCOMPLETE (Nominatim, TN-focused)
+// ═══════════════════════════════════════════════
+let acDebounce = {};
+function setupAutocomplete(inputId, listId, coordSetter, coordClearer) {
+    const input = document.getElementById(inputId);
+    const list = document.getElementById(listId);
+    let activeIdx = -1;
+
+    input.addEventListener('input', () => {
+        // User is typing — invalidate previously selected coords
+        coordClearer();
+        const q = input.value.trim();
+        if (q.length < 2) { list.classList.remove('open'); return; }
+        clearTimeout(acDebounce[inputId]);
+        acDebounce[inputId] = setTimeout(() => fetchSuggestions(q, list, input, coordSetter), 300);
+    });
+
+    input.addEventListener('keydown', e => {
+        const items = list.querySelectorAll('.ac-item');
+        if (!list.classList.contains('open') || items.length === 0) {
+            if (e.key === 'Enter') { e.preventDefault(); analyzeRoute(); }
+            return;
+        }
+        if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); highlightAC(items, activeIdx); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx-1, 0); highlightAC(items, activeIdx); }
+        else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (activeIdx >= 0 && items[activeIdx]) items[activeIdx].click();
+            else analyzeRoute();
+        }
+        else if (e.key === 'Escape') { list.classList.remove('open'); }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+        if (!input.contains(e.target) && !list.contains(e.target)) list.classList.remove('open');
+    });
+}
+
+function highlightAC(items, idx) {
+    items.forEach((it,i) => it.classList.toggle('active', i===idx));
+}
+
+// Check if coords are within Tamil Nadu bounds
+function isInTamilNadu(lat, lon) {
+    return lat >= 8.0 && lat <= 13.6 && lon >= 76.0 && lon <= 80.5;
+}
+
+// Extract town/city/district context from Nominatim address
+function getLocationContext(addr, mainName) {
+    const town = addr.town || addr.city || addr.city_district || '';
+    const village = addr.village || addr.hamlet || addr.suburb || addr.neighbourhood || '';
+    const district = addr.county || addr.state_district || '';
+    // Pick the best context — prefer town/city, then village, then district
+    const place = town || village;
+    const parts = [place, district].filter(s => s && s.toLowerCase() !== mainName.toLowerCase());
+    return parts.length > 0 ? parts.join(', ') : '';
+}
+
+async function fetchSuggestions(query, list, input, coordSetter) {
+    // Append Tamil Nadu for geo-relevance if not already present
+    const tnQuery = /tamil\s*nadu/i.test(query) ? query : query + ', Tamil Nadu';
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(tnQuery)}&countrycodes=in&viewbox=${TN_VIEWBOX}&bounded=1&limit=8&addressdetails=1`;
+    try {
+        let resp = await fetch(url, { headers: { 'User-Agent': 'SafeRouteAI/1.0' } });
+        let data = await resp.json();
+
+        // Fallback: retry without Tamil Nadu suffix if no results
+        if (data.length === 0) {
+            const url2 = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in&viewbox=${TN_VIEWBOX}&bounded=1&limit=8&addressdetails=1`;
+            resp = await fetch(url2, { headers: { 'User-Agent': 'SafeRouteAI/1.0' } });
+            data = await resp.json();
+        }
+
+        list.innerHTML = '';
+        if (data.length === 0) { list.classList.remove('open'); return; }
+
+        // Filter to results within TN bounds and prefer Tamil Nadu state
+        const filtered = data.filter(item => {
+            const lat = parseFloat(item.lat), lon = parseFloat(item.lon);
+            if (!isInTamilNadu(lat, lon)) return false;
+            const state = ((item.address || {}).state || '').toLowerCase();
+            return state === '' || state.includes('tamil nadu');
+        });
+        const results = filtered.length > 0 ? filtered : data.filter(item => isInTamilNadu(parseFloat(item.lat), parseFloat(item.lon)));
+        if (results.length === 0) { list.classList.remove('open'); return; }
+
+        // Deduplicate by rounding coords to ~100m precision
+        const seen = new Set();
+        results.forEach(item => {
+            const lat = parseFloat(item.lat), lon = parseFloat(item.lon);
+            const key = `${lat.toFixed(3)},${lon.toFixed(3)}`;
+            if (seen.has(key)) return;
+            seen.add(key);
+
+            const div = document.createElement('div');
+            div.className = 'ac-item';
+            const parts = item.display_name.split(',');
+            const main = parts[0].trim();
+            const addr = item.address || {};
+            const context = getLocationContext(addr, main);
+            const displayName = context ? `${main}, ${context}` : main;
+
+            div.innerHTML = `<span class="ac-main">${esc(main)}</span><span class="ac-sub">${esc(context || parts.slice(1, 3).join(', ').trim())}</span>`;
+            div.addEventListener('click', () => {
+                input.value = displayName;
+                coordSetter({ lat, lon, name: displayName });
+                list.classList.remove('open');
+                tlogInfo(`Selected: "${displayName}" (${lat.toFixed(4)}, ${lon.toFixed(4)})`);
+            });
+            list.appendChild(div);
+        });
+        list.classList.add('open');
+    } catch (err) {
+        tlogError(`Autocomplete failed: ${err.message}`);
+    }
+}
+
+// ═══════════════════════════════════════════════
+// LOAD ZONES
+// ═══════════════════════════════════════════════
+async function loadZones() {
+    try {
+        tlogInfo('Loading accident zones...');
+        const resp = await fetch(`${API_BASE}/api/zones`);
+        if (!resp.ok) throw new Error('Failed to load zones');
+        zones = await resp.json();
+        renderZones();
+        tlogSuccess(`Loaded ${zones.length} accident zones on map`);
+    } catch (err) {
+        tlogError('Failed to load zones: ' + err.message);
+        showToast('Error', 'Failed to load accident zones from server.');
+    }
+}
+
+function renderZones() {
+    zones.forEach(zone => {
+        const color = RISK_COLORS[zone.risk_level] || '#888';
+
+        // Area circle for zone coverage feel (canvas-rendered for performance)
+        L.circle([zone.lat, zone.lon], {
+            radius: zone.risk_level === 'HIGH' ? 2500 : zone.risk_level === 'MEDIUM' ? 1800 : 1200,
+            color: color,
+            weight: 1,
+            opacity: 0.25,
+            fillColor: color,
+            fillOpacity: 0.12,
+            interactive: false,
+        }).addTo(map);
+
+        const marker = L.marker([zone.lat, zone.lon], {
+            icon: L.divIcon({
+                className: '',
+                html: `<div class="zone-marker">
+                    <div class="zone-dot ${esc(zone.risk_level)}"></div>
+                    <div class="zone-label">${esc(zone.location)}</div>
+                </div>`,
+                iconSize: [12, 12],
+                iconAnchor: [6, 6],
+            }),
+        }).addTo(map);
+
+        marker.bindPopup(`
+            <div style="min-width:220px;font-family:'Inter',sans-serif;padding:4px 0;">
+                <div style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:8px;">${esc(zone.location)}</div>
+                <span style="
+                    display:inline-block;padding:3px 12px;border-radius:20px;
+                    font-size:10px;font-weight:700;margin-bottom:10px;letter-spacing:0.5px;
+                    background:${zone.risk_level==='HIGH'?'#fef2f2':zone.risk_level==='MEDIUM'?'#fffbeb':'#f0fdf4'};
+                    color:${color};">
+                    ${esc(zone.risk_level)} RISK
+                </span>
+                <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:12px;color:#94a3b8;line-height:1.6;">
+                    <div>Accidents</div><div style="color:#1e293b;font-weight:600;">${esc(zone.accident_count)}</div>
+                    <div>Fatality</div><div style="color:#1e293b;font-weight:600;">${(zone.fatality_rate * 100).toFixed(0)}%</div>
+                    <div>Road</div><div style="color:#1e293b;font-weight:600;">${esc(zone.road_type)}</div>
+                    <div>Cause</div><div style="color:#1e293b;font-weight:600;">${esc(zone.common_cause)}</div>
+                    <div>Peak</div><div style="color:#1e293b;font-weight:600;">${esc(zone.peak_hour_start)}:00 – ${esc(zone.peak_hour_end)}:00</div>
+                </div>
+            </div>
+        `, { maxWidth: 280 });
+
+        marker.on('click', () => fetchAIInsight(zone.lat, zone.lon));
+    });
+
+    // Zone count overlay
+    const high = zones.filter(z => z.risk_level === 'HIGH').length;
+    const med = zones.filter(z => z.risk_level === 'MEDIUM').length;
+    const low = zones.filter(z => z.risk_level === 'LOW').length;
+    const el = document.createElement('div');
+    el.className = 'map-zone-count';
+    el.innerHTML = `<span class="mzc-num">${zones.length}</span><span class="mzc-label">Risk Zones</span><span class="mzc-dots"><span class="mzc-dot" style="background:#ef4444" title="${high} High"></span><span class="mzc-dot" style="background:#f59e0b" title="${med} Medium"></span><span class="mzc-dot" style="background:#22c55e" title="${low} Low"></span></span>`;
+    document.querySelector('.map-container').appendChild(el);
+}
+
+// ═══════════════════════════════════════════════
+// AI INSIGHT
+// ═══════════════════════════════════════════════
+async function fetchAIInsight(lat, lon) {
+    const card = document.getElementById('aiCard');
+    card.innerHTML = '<div class="no-data">Loading AI insight...</div>';
+    tlogInfo(`Fetching AI insight for (${lat.toFixed(4)}, ${lon.toFixed(4)})...`);
+
+    try {
+        const resp = await fetch(`${API_BASE}/api/zone-insight?lat=${lat}&lon=${lon}`);
+        if (!resp.ok) throw new Error('API error');
+        const data = await resp.json();
+
+        card.innerHTML = `
+            <div class="zone-name">${esc(data.zone_name)}</div>
+            <span class="risk-badge risk-${esc(data.risk_level)}">${esc(data.risk_level)} RISK</span>
+            <div class="insight-text">${esc(data.ai_insight)}</div>
+            <div style="margin-top:10px;font-size:11px;color:#94a3b8;">
+                Distance: ${esc(data.distance_km)}km | Weather: ${esc(data.weather_risk)}
+                ${data.accident_count ? `| Accidents: ${esc(data.accident_count)}` : ''}
+            </div>
+        `;
+    } catch (err) {
+        card.innerHTML = `<div class="no-data">Failed to get AI insight.</div>`;
+    }
+}
+
+// ═══════════════════════════════════════════════
+// WEATHER
+// ═══════════════════════════════════════════════
+async function updateWeather(lat, lon) {
+    try {
+        const resp = await fetch(`${API_BASE}/api/weather?lat=${lat}&lon=${lon}`);
+        if (!resp.ok) return;
+        const data = await resp.json();
+
+        const icons = { clear: 'Clear', rain: 'Rain', fog: 'Fog', storm: 'Storm' };
+        const condition = data.condition || 'unknown';
+        document.getElementById('weatherCondition').textContent =
+            `${condition.charAt(0).toUpperCase() + condition.slice(1)} ${data.temp_c || '--'}°C`;
+        document.getElementById('weatherMultiplier').textContent =
+            data.risk_multiplier > 1 ? `${data.risk_multiplier}x risk` : '';
+
+        const badge = document.getElementById('weatherBadge');
+        badge.querySelector('.weather-icon-text').textContent = icons[condition] || '--';
+    } catch (err) {
+        tlogError('Weather update failed: ' + err.message);
+    }
+}
+
+// ═══════════════════════════════════════════════
+// GPS TRACKING
+// ═══════════════════════════════════════════════
+function startGPS() {
+    if (!navigator.geolocation) {
+        tlogInfo('Geolocation not available, using TN center for weather.');
+        updateWeather(13.08, 80.27);
+        return;
+    }
+
+    gpsWatchId = navigator.geolocation.watchPosition(
+        (pos) => {
+            const { latitude: lat, longitude: lng } = pos.coords;
+            updateUserMarker(lat, lng);
+        },
+        (err) => {
+            tlogInfo('GPS: ' + err.message + ' — using default location.');
+            showToast('GPS Unavailable', 'Using default Tamil Nadu location for weather data.');
+            updateWeather(TN_CENTER[0], TN_CENTER[1]);
+        },
+        { enableHighAccuracy: true, maximumAge: 3000, timeout: 10000 }
+    );
+}
+
+function updateUserMarker(lat, lng) {
+    if (userMarker) {
+        userMarker.setLatLng([lat, lng]);
+    } else {
+        userMarker = L.marker([lat, lng], {
+            icon: L.divIcon({
+                className: '',
+                html: `<div class="user-loc-marker">
+                    <div class="user-loc-ring"></div>
+                    <div class="user-loc-dot"></div>
+                    <div class="user-loc-label">YOU</div>
+                </div>`,
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+            }),
+            zIndexOffset: 1000,
+        }).addTo(map);
+        userMarker.bindPopup(`
+            <div style="font-family:'Inter',sans-serif;text-align:center;padding:4px 0;">
+                <div style="font-size:13px;font-weight:700;color:#0f172a;">Your Location</div>
+                <div style="font-size:11px;color:#94a3b8;margin-top:4px;">GPS tracking active</div>
+            </div>
+        `);
+        updateWeather(lat, lng);
+    }
+}
+
+let lastNearbyCheck = 0;
+async function checkNearbyRisk(lat, lon) {
+    const now = Date.now();
+    if (now - lastNearbyCheck < NEARBY_CHECK_INTERVAL) return;
+    lastNearbyCheck = now;
+
+    try {
+        const resp = await fetch(`${API_BASE}/api/nearby-risk?lat=${lat}&lon=${lon}`);
+        if (!resp.ok) return;
+        const data = await resp.json();
+
+        if (data.in_risk_zone && data.zone_data) {
+            const zoneName = data.zone_data.location;
+            const lastAlert = lastAlertTimes[zoneName] || 0;
+
+            if (now - lastAlert > ALERT_COOLDOWN) {
+                lastAlertTimes[zoneName] = now;
+                triggerVoiceAlert(zoneName, data.ai_warning, data.risk_level);
+                showToast(
+                    `${data.risk_level} Risk Zone`,
+                    `${zoneName}: ${data.ai_warning || 'Reduce speed and stay alert.'}`
+                );
+            }
+        }
+    } catch (err) {
+        // silent
+    }
+}
+
+setInterval(() => {
+    if (userMarker) {
+        const { lat, lng } = userMarker.getLatLng();
+        checkNearbyRisk(lat, lng);
+    }
+}, NEARBY_CHECK_INTERVAL);
+
+setInterval(() => {
+    if (userMarker) {
+        const { lat, lng } = userMarker.getLatLng();
+        updateWeather(lat, lng);
+    }
+}, WEATHER_CHECK_INTERVAL);
+
+// ═══════════════════════════════════════════════
+// VOICE ALERTS
+// ═══════════════════════════════════════════════
+function triggerVoiceAlert(zoneName, warning, riskLevel) {
+    if (!window.speechSynthesis) return;
+
+    const text = `Warning! You are entering a ${riskLevel} accident risk zone. ${zoneName}. ${warning || 'Reduce speed and stay alert.'}`;
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+    utterance.lang = 'en-IN';
+
+    window.speechSynthesis.cancel();
+    utterance.onerror = function(e) { tlogError('Speech synthesis failed: ' + e.error); };
+    window.speechSynthesis.speak(utterance);
+}
+
+// ═══════════════════════════════════════════════
+// ROUTE ANALYSIS (uses autocomplete coords first)
+// ═══════════════════════════════════════════════
+async function analyzeRoute() {
+    const originText = document.getElementById('originInput').value.trim();
+    const destText = document.getElementById('destInput').value.trim();
+
+    if (!originText || !destText) {
+        showToast('Input Required', 'Please enter both origin and destination.');
+        return;
+    }
+
+    const btn = document.getElementById('analyzeBtn');
+    btn.disabled = true;
+    btn.textContent = 'Analyzing...';
+    showLoading(true);
+    tlogInfo(`Route analysis: "${originText}" → "${destText}"`);
+
+    try {
+        // Use stored coords from autocomplete selection; if user edited text, coords were cleared
+        let oCoords = originCoords;
+        let dCoords = destCoords;
+
+        if (!oCoords) {
+            tlogInfo('Geocoding origin: "' + originText + '"');
+            oCoords = await geocode(originText);
+            if (oCoords) {
+                originCoords = oCoords;
+                document.getElementById('originInput').value = oCoords.name;
+            }
+        }
+        if (!dCoords) {
+            tlogInfo('Geocoding destination: "' + destText + '"');
+            dCoords = await geocode(destText);
+            if (dCoords) {
+                destCoords = dCoords;
+                document.getElementById('destInput').value = dCoords.name;
+            }
+        }
+
+        if (!oCoords || !dCoords) {
+            throw new Error('Could not find one or both locations. Please select from the dropdown suggestions.');
+        }
+
+        // Validate both points are within Tamil Nadu
+        if (!isInTamilNadu(oCoords.lat, oCoords.lon) || !isInTamilNadu(dCoords.lat, dCoords.lon)) {
+            throw new Error('One or both locations are outside Tamil Nadu. Please select valid locations.');
+        }
+
+        tlogInfo(`Origin: (${oCoords.lat.toFixed(4)}, ${oCoords.lon.toFixed(4)}) | Dest: (${dCoords.lat.toFixed(4)}, ${dCoords.lon.toFixed(4)})`);
+
+        const resp = await fetch(`${API_BASE}/api/route-risk`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                origin_lat: oCoords.lat,
+                origin_lon: oCoords.lon,
+                dest_lat: dCoords.lat,
+                dest_lon: dCoords.lon,
+            }),
+        });
+
+        if (!resp.ok) {
+            const errData = await resp.json().catch(() => ({}));
+            throw new Error(errData.error || 'Route analysis failed');
+        }
+
+        const routeData = await resp.json();
+        tlogSuccess(`Route scored: ${routeData.overall_risk} risk (${(routeData.overall_score*100).toFixed(0)}%) | ${routeData.total_distance_km}km | ${routeData.zone_warnings?.length || 0} danger zones`);
+        renderRoute(routeData);
+        renderRouteSummary(routeData);
+        renderZoneWarnings(routeData);
+        document.getElementById('clearBtn').style.display = '';
+
+        if (routeData.zone_warnings && routeData.zone_warnings.length > 0) {
+            const topZone = routeData.zone_warnings[0];
+            const zoneInfo = zones.find(z => z.location === topZone.location);
+            if (zoneInfo) fetchAIInsight(zoneInfo.lat, zoneInfo.lon);
+        }
+
+    } catch (err) {
+        showToast('Route Error', err.message);
+        tlogError('Route analysis failed: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'ANALYZE ROUTE RISK';
+        showLoading(false);
+    }
+}
+
+async function geocode(query) {
+    const headers = { 'User-Agent': 'SafeRouteAI/1.0' };
+    const tnQuery = /tamil\s*nadu/i.test(query) ? query : query + ', Tamil Nadu';
+
+    // Strategy 1: Search with Tamil Nadu appended + viewbox bounded
+    const strategies = [
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(tnQuery)}&countrycodes=in&viewbox=${TN_VIEWBOX}&bounded=1&limit=5&addressdetails=1`,
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Tamil Nadu, India')}&countrycodes=in&limit=5&addressdetails=1`,
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in&viewbox=${TN_VIEWBOX}&bounded=1&limit=5&addressdetails=1`,
+    ];
+
+    for (const url of strategies) {
+        try {
+            const resp = await fetch(url, { headers });
+            const data = await resp.json();
+            // Find best result within Tamil Nadu bounds
+            for (const item of data) {
+                const lat = parseFloat(item.lat), lon = parseFloat(item.lon);
+                if (!isInTamilNadu(lat, lon)) continue;
+                const state = ((item.address || {}).state || '').toLowerCase();
+                if (state && !state.includes('tamil nadu')) continue;
+                const parts = item.display_name.split(',');
+                const main = parts[0].trim();
+                const addr = item.address || {};
+                const context = getLocationContext(addr, main);
+                const displayName = context ? `${main}, ${context}` : main;
+                tlogInfo(`Geocoded: "${query}" → "${displayName}" (${lat.toFixed(4)}, ${lon.toFixed(4)})`);
+                return { lat, lon, name: displayName };
+            }
+        } catch (e) { /* try next strategy */ }
+    }
+    tlogError(`Geocoding failed for: "${query}"`);
+    return null;
+}
+
+function renderRoute(data) {
+    if (routeLayer) map.removeLayer(routeLayer);
+    routeLayer = L.layerGroup().addTo(map);
+
+    const polyline = data.route_polyline;
+    if (!polyline || polyline.length === 0) return;
+
+    // Single route outline
+    L.polyline(polyline, { color: '#94a3b8', weight: 6, opacity: 0.4, lineCap: 'round', lineJoin: 'round' }).addTo(routeLayer);
+
+    if (data.timeline && data.timeline.length > 1) {
+        for (let i = 0; i < data.timeline.length - 1; i++) {
+            const seg = data.timeline[i];
+            const nextSeg = data.timeline[i + 1];
+            const color = RISK_COLORS[seg.risk] || '#888';
+
+            const startPt = findClosestPoint(polyline, seg.lat, seg.lon);
+            const endPt = findClosestPoint(polyline, nextSeg.lat, nextSeg.lon);
+
+            if (startPt !== null && endPt !== null && startPt < endPt) {
+                const segCoords = polyline.slice(startPt, endPt + 1);
+                L.polyline(segCoords, { color: color, weight: 5, opacity: 0.9, lineCap: 'round', lineJoin: 'round' }).addTo(routeLayer);
+            }
+        }
+    } else {
+        const color = RISK_COLORS[data.overall_risk] || '#888';
+        L.polyline(polyline, { color: color, weight: 5, opacity: 0.9, lineCap: 'round', lineJoin: 'round' }).addTo(routeLayer);
+    }
+
+    if (polyline.length > 0) {
+        L.marker(polyline[0], {
+            icon: L.divIcon({
+                className: '',
+                html: '<div class="route-pin"><div class="route-pin-head start">A</div><div class="route-pin-stem"></div></div>',
+                iconSize: [32, 44],
+                iconAnchor: [16, 44],
+            }),
+            zIndexOffset: 500,
+        }).addTo(routeLayer);
+
+        L.marker(polyline[polyline.length - 1], {
+            icon: L.divIcon({
+                className: '',
+                html: '<div class="route-pin"><div class="route-pin-head end">B</div><div class="route-pin-stem"></div></div>',
+                iconSize: [32, 44],
+                iconAnchor: [16, 44],
+            }),
+            zIndexOffset: 500,
+        }).addTo(routeLayer);
+    }
+
+    map.fitBounds(L.latLngBounds(polyline), { padding: [40, 40] });
+}
+
+function findClosestPoint(polyline, lat, lon) {
+    let minDist = Infinity;
+    let idx = null;
+    for (let i = 0; i < polyline.length; i++) {
+        const d = Math.pow(polyline[i][0] - lat, 2) + Math.pow(polyline[i][1] - lon, 2);
+        if (d < minDist) { minDist = d; idx = i; }
+    }
+    return idx;
+}
+
+function renderRouteSummary(data) {
+    const section = document.getElementById('routeSection');
+    const container = document.getElementById('routeSummary');
+    section.style.display = 'block';
+
+    const riskColor = RISK_COLORS[data.overall_risk] || '#888';
+
+    let timelineHTML = '<div class="timeline-bar">';
+    if (data.timeline && data.timeline.length > 0) {
+        data.timeline.forEach(seg => {
+            timelineHTML += `<div class="timeline-segment ${esc(seg.risk)}" style="flex:1" title="${esc(seg.location)}: ${esc(seg.risk)} (${seg.score})"></div>`;
+        });
+    }
+    timelineHTML += '</div>';
+
+    container.innerHTML = `
+        <div class="route-stats">
+            <div class="stat-box">
+                <div class="stat-value" style="color:${riskColor}">${(data.overall_score * 100).toFixed(0)}%</div>
+                <div class="stat-label">Risk Score</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">${esc(data.total_distance_km)} km</div>
+                <div class="stat-label">Distance</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">${esc(data.duration_min)} min</div>
+                <div class="stat-label">Duration</div>
+            </div>
+        </div>
+        <div style="text-align:center;margin-bottom:8px;">
+            <span class="risk-badge risk-${esc(data.overall_risk)}" style="
+                display:inline-block;padding:4px 14px;border-radius:20px;
+                font-size:11px;font-weight:700;letter-spacing:0.5px;
+                background:${data.overall_risk==='HIGH'?'#fef2f2':data.overall_risk==='MEDIUM'?'#fffbeb':'#f0fdf4'};
+                color:${riskColor};">
+                OVERALL: ${esc(data.overall_risk)} RISK
+            </span>
+        </div>
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">RISK TIMELINE</div>
+        ${timelineHTML}
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#94a3b8;">
+            <span>Start</span>
+            <span>${esc(data.total_distance_km)} km</span>
+        </div>
+        ${data.weather ? `
+        <div style="margin-top:10px;font-size:12px;color:#64748b;">
+            Weather: ${esc(data.weather.condition)} ${esc(data.weather.temp_c)}°C |
+            Visibility: ${esc(data.weather.visibility_km)}km |
+            Multiplier: ${esc(data.weather.risk_multiplier)}x
+        </div>` : ''}
+    `;
+}
+
+function renderZoneWarnings(data) {
+    const section = document.getElementById('warningsSection');
+    const container = document.getElementById('zoneWarnings');
+
+    if (!data.zone_warnings || data.zone_warnings.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    container.innerHTML = data.zone_warnings.map(w => {
+        const color = RISK_COLORS[w.risk_level] || '#888';
+        return `
+        <div class="zone-warning" style="border-left-color:${color};">
+            <span class="zw-km" style="background:${color}20;color:${color};">KM ${esc(w.km_marker)}</span>
+            <div class="zw-info">
+                <span class="zw-name">${esc(w.location)}</span>
+                <span style="font-size:10px;font-weight:700;color:${color};margin-left:6px;">${esc(w.risk_level)}</span><br>
+                <span class="zw-cause">
+                    ${esc(w.common_cause)} | Accidents: ${esc(w.accident_count)} |
+                    Fatality: ${(w.fatality_rate * 100).toFixed(0)}%
+                </span>
+            </div>
+        </div>
+    `;}).join('');
+}
+
+// ═══════════════════════════════════════════════
+// CLEAR ROUTE
+// ═══════════════════════════════════════════════
+function clearRoute() {
+    if (routeLayer) { map.removeLayer(routeLayer); routeLayer = null; }
+    document.getElementById('routeSection').style.display = 'none';
+    document.getElementById('warningsSection').style.display = 'none';
+    document.getElementById('routeSummary').innerHTML = '';
+    document.getElementById('zoneWarnings').innerHTML = '';
+    document.getElementById('aiCard').innerHTML = '<div class="no-data">Click a zone on the map or analyze a route to see AI insights.</div>';
+    document.getElementById('originInput').value = '';
+    document.getElementById('destInput').value = '';
+    originCoords = null;
+    destCoords = null;
+    document.getElementById('clearBtn').style.display = 'none';
+    map.fitBounds(TN_MAX_BOUNDS);
+    tlogInfo('Route cleared.');
+}
+
+
+// ═══════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════
+function showLoading(on) {
+    document.getElementById('loadingOverlay').classList.toggle('active', on);
+}
+
+function showToast(title, msg) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<div class="toast-title">${title}</div><div class="toast-msg">${msg}</div>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 6000);
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        tlogInfo('SafeRoute-AI starting...');
+        initMap();
+        loadZones();
+        startGPS();
+
+        // Autocomplete setup
+        setupAutocomplete('originInput', 'originAC', (c) => { originCoords = c; }, () => { originCoords = null; });
+        setupAutocomplete('destInput', 'destAC', (c) => { destCoords = c; }, () => { destCoords = null; });
+
+        updateWeather(TN_CENTER[0], TN_CENTER[1]);
+
+        tlogSuccess('Application ready. Type a location or click a zone.');
+    } catch (e) {
+        console.error('SafeRoute-AI initialization failed:', e);
+    }
+});
+</script>
+</body>
+</html>
